@@ -79,6 +79,15 @@ a {
   /* background-image: linear-gradient(120deg, #155799, #159957); */
   background-image: url('../images/header2.jpg'); }
 
+/* Yes, I am a CSS hack */
+.page-header a {
+  color: #FFFFFF;
+  text-decoration: none; }
+
+.big-page-header a {
+  color: #FFFFFF;
+  text-decoration: none; }
+
 .project-name {
   margin-top: 0;
   margin-bottom: 0.1rem; }
@@ -242,12 +251,12 @@ a {
 
 @media screen and (min-width: 64em) {
   .site-footer {
-    font-size: 1rem; } }
+    font-size: 0.7rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .site-footer {
-    font-size: 1rem; } }
+    font-size: 0.7rem; } }
 
 @media screen and (max-width: 42em) {
   .site-footer {
-    font-size: 0.9rem; } }
+    font-size: 0.7rem; } }
