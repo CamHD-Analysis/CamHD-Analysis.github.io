@@ -16,9 +16,9 @@
 title: CamHD Analysis
 email: amarburg@apl.washington.edu
 description: > # this means to ignore newlines until "baseurl:"
-  CamHD Analysis Tools
+  Cloud-Enabled Tools for CamHD Data Analysis
 baseurl: "/public-www" # the subpath of your site, e.g. /blog
-url: "http://camhd-analysis.github.io" # the base hostname & protocol for your site
+url: "https://camhd-analysis.github.io" # the base hostname & protocol for your site
 #twitter_username: jekyllrb
 #github_username:  jekyll
 

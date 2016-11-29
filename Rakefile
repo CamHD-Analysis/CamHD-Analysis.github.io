@@ -28,7 +28,7 @@ desc 'Rebuild website and check with HTMLProofer'
 task :check => :rebuild do
   Bundler.require(:test)
 
-  HTMLProofer.check_directory( "./_site" ).run
+  HTMLProofer.check_directory( "./_site", url_swap: { /^\/public-www\// => '/' } ).run
 end
 
 desc 'Push website to origin (Github pages)'
