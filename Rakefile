@@ -31,7 +31,7 @@ task :check => :rebuild do
   HTMLProofer.check_directory( "./_site" ).run
 end
 
-desc 'Push website to host'
+desc 'Push website to origin (Github pages)'
 task :push do
   sh "git push origin"
 end
