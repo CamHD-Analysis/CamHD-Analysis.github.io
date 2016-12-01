@@ -4,7 +4,7 @@ Bundler.require(:default)
 # baseurl = "amarburg/site"
 port = 4001
 
-serve_args = %w( jekyll server --incremental )
+serve_args = %w( jekyll server --incremental --verbose )
 serve_args << %W( --port #{port}) if port != 4000
 
 desc 'Serve pages as on the webhost'
