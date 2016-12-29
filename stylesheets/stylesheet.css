@@ -19,6 +19,10 @@ a {
   font-weight: bold;
 }
 
+.center {
+  text-align: center;
+}
+
 .btn {
   display: inline-block;
   margin-bottom: 1rem;
