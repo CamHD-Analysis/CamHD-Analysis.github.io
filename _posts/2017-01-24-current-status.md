@@ -4,17 +4,17 @@ title:  A Brief Tour of LazyCache
 categories: escience lazycache
 ---
 
-With the time set aside for the eScience Incubator, I've reached a (very) minimal working example of the CamHD caching software which is fully deployable to a [Google Compute Engine](http://cloud.google.com/) instance.   It isn't terribly stable, but that's something I can improve upon.
+With the time set aside for the [eScience Incubator](https://github.com/uwescience/incubator2017), I've reached a (very) minimal working example of the CamHD caching/server software which is fully deployable to a [Google Compute Engine](http://cloud.google.com/) instance.   It isn't terribly stable or configurable, but I can make improve those slowly.
 
  It seems like a good time to step back, take stock and document.     At this point I'm going to worry about _how_ I'm doing it.  _What_ and _why_ I'm doing it is a whole 'nother story.
 
-Let's start at the top.  Our caching software is written in Go.   Following the Go idiom, the software is written as a set of modular libraries:
+Let's start at the top.  The caching software is written in Go.   Following the Go idiom, the software is written as a set of modular libraries:
 
- * [go-lazyfs](https://github.com/amarburg/go-lazyfs) defines an interface for performing random access from files over HTTP.
+ * [go-lazyfs](https://github.com/amarburg/go-lazyfs) defines an interface for performing --- and optionally caching --- random access from files over HTTP.
 
  * [go-quicktime](https://github.com/amarburg/go-quicktime) parses the tree of Atoms in a [Quicktime](https://developer.apple.com/library/content/documentation/QuickTime/QTFF/QTFFChap2/qtff2.html#//apple_ref/doc/uid/TP40000939-CH204-SW1) file.
 
- * [goav](https://github.com/amarburg/goav) uses `cgo` to import the FFMpeg API into Go.   Forked from [here](https://github.com/giorgisio/goav).
+ * [goav](https://github.com/amarburg/goav) uses [`cgo`](https://golang.org/cmd/cgo/) to import the [FFMpeg API](https://www.ffmpeg.org/) into Go.   Forked from [here](https://github.com/giorgisio/goav).
 
  * [go-prores-quicktime](https://github.com/amarburg/go-prores-ffmpeg) uses `go-quicktime` to find and retrieve individual frames within a movie, then uses `goav` to convert the enclosed data (in ProRes format) into the Go [`Image`](https://golang.org/pkg/image/) format.
 
@@ -24,28 +24,32 @@ These packages are all used to build [go-lazycache](https://github.com/amarburg/
 
 Thanks to the flexible Go packaging system, it's pretty straightforward to build a go application.
 
-To run lazycache, need to have `go` __and__ the [FFMpeg](https://www.ffmpeg.org/) libraries (libavcodec, etc.) installed.  Note that there was a period when both Debian and Ubuntu used the alternative [libav](https://libav.org/) libraries which have the same names, but which aren't compatible.   Ubuntu distributions from 2016 (Xenial, etc.) use ffmpeg.
+To run lazycache, need to have `go` __and__ the [FFMpeg](https://www.ffmpeg.org/) libraries (libavcodec, etc.) installed.  Note that there was a period when both Debian and Ubuntu used the alternative [libav](https://libav.org/) libraries which have the same names, but which aren't compatible.   Ubuntu distributions from 2016 on (Xenial, etc.) have returned to using "real" ffmpeg.   In an Ubuntu operating system, I believe:
 
-Alternatively, I built a [Docker image](https://hub.docker.com/r/amarburg/golang-ffmpeg/) based on the Debian-based-version of the [official Go language docker image](https://hub.docker.com/_/golang/).   Everything described here can be done in that image (assuming you have [Docker](https://www.docker.com/) installed):
+    sudo apt-get install libavcodec-dev libavdevice-dev libavutil-dev libswresample-dev libavfilter-dev libswscale-dev
+
+will get all of the relevant packages, though I haven't tested it...
+
+Alternatively, I built a [Docker image](https://hub.docker.com/r/amarburg/golang-ffmpeg/) based on the Debian-based-version of the [official Go language docker image](https://hub.docker.com/_/golang/).   Everything described here can be done in an instance of that image (assuming you have [Docker](https://www.docker.com/) installed):
 
     docker run --tty -i --rm --publish 5000:5000 amarburg/golang-ffmpeg:wheezy-1.8
 
-(the `--publish` is required to expose the webserver ... as shown below)
+(the `--publish` is required to expose the webserver, as shown below)
 
-Assuming [GOPATH has been set](https://golang.org/doc/code.html),
+Assuming [GOPATH has been set](https://golang.org/doc/code.html), download and build `go-lazycache` and all of its Go dependencies --- both those that I've written like `go-lazyfs` and deps from further upstream:
 
     % cd $GOPATH
     % go get github.com/amarburg/go-lazycache
 
 _(right now, this will spit out a bunch of deprecated function warnings from ffmpeg.   Sorry!)_
 
-This will install `go-lazycache` and all dependencies.
+And builds the binary `lazycache-server` and installs it in `$GOPATH/bin/`
 
     % go install github.com/amarburg/go-lazycache/cmd/lazycache-server
 
-(it is apparently idiomatic way to put binaries in a Go package in a `cmd/` subdirectory)
+(it is apparently idiomatic way to put binaries for a Go package in their own `cmd/` subdirectory )
 
-This builds the binary `lazycache-server` and installs it in `$GOPATH/bin/`, where can be run:
+The application can then be run:
 
     % bin/lazycache-server
     [rawdata oceanobservatories org]
@@ -56,7 +60,7 @@ This builds the binary `lazycache-server` and installs it in `$GOPATH/bin/`, whe
     Fs at http://0.0.0.0:5000/org/oceanobservatories/rawdata/
     ....
 
-This will start the application, which will listen on the local port 5000.   Opening a web browser to `http://localhost:5000/org/oceanobservatories/rawdata/files/` should produce some JSON describing the contents of the directory [`http://rawdata.oceanobservatories.org/files/`](http://rawdata.oceanobservatories.org/files/) on the OOI Raw data portal.
+This will start the application, which will listen on the local port 5000.   Opening a web browser to `http://localhost:5000/org/oceanobservatories/rawdata/files/` should produce JSON describing the contents of the directory [`http://rawdata.oceanobservatories.org/files/`](http://rawdata.oceanobservatories.org/files/) on the OOI Raw data portal.
 
 {:center}
 ![]({{site.baseurl}}/images/lazycache_sample_page.jpg)
@@ -66,10 +70,10 @@ _Technically speaking `http://localhost:5000/org/oceanobservatories/rawdata/` wo
 
 ## Docker
 
-Docker forms the next layer of pyramid of tools.   Lazycache can certainly be run standalone, but is intended for deployment as a Docker container.  This brings all of the deployment and versioning benefits of Docker, but also lets us control dependencies (like the FFMpeg version).
+Docker forms the next layer of pyramid of tools.   Lazycache can certainly be run as a standalone program, but is intended for deployment as a Docker container.  This brings all of the deployment and versioning benefits of Docker, and also lets us control dependencies (like the somewhat tricky FFMpeg versioning).
 
 Files related to deploying lazycache are stored in a separate repository, [lazycache-deploy](https://github.com/amarburg/lazycache-deploy).   Within that repo, the Dockerfile
-will perform the steps detailed above:
+essentially replicates the steps detailed above:
 
     FROM amarburg/golang-ffmpeg:wheezy-1.8
 
@@ -84,7 +88,7 @@ will perform the steps detailed above:
     # Document that the service listens on port 5000
     EXPOSE 5000
 
-This builds on the [docker-golang-ffmpeg](https://github.com/amarburg/docker-golang-ffmpeg) image mentioned earlier and essentially runs the same commands as above.   The two lines in the middle re `service_account.json` install a JSON authentication key to access a Google Storage bucket.  Ignore for now.
+This builds on the [docker-golang-ffmpeg](https://github.com/amarburg/docker-golang-ffmpeg) image mentioned earlier.   The two lines in the middle re `service_account.json` install a JSON authentication key to access a Google Storage bucket.  Ignore for now.
 
 # Wercker
 
@@ -117,13 +121,13 @@ One minor twist is that Wercker is itself Docker based.   To enroll a repository
             code: |
               go test ./...
 
-Which is pretty straightforward.   It specifies that the tests should run in the Docker image [`golang`](https://hub.docker.com/_/golang/) (the official Go Docker image).   It specifies a single "pipeline" called "build" which contains four steps, first a canned Go setup routine (provided by wercker), then the standard go sequence of get-build-test.   
+Which is pretty straightforward.   It specifies that the tests should run in the Docker image [`golang`](https://hub.docker.com/_/golang/) (I can use the official Go Docker image because `go-lazyfs` doesn't require FFMpeg).   It specifies a single "pipeline" called "build" which contains four steps, first a canned Go setup routine (provided by wercker), then the standard go sequence of get-build-test.   
 
-Interestingly, wercker automatically checks out and works in a copy of the current repository (the one begin tested), so `go get` fetches all of the dependencies for the original repo.   The `go build` and `go test` commands then build and test the current repository.
+wercker automatically checks out and works in a copy of the current repository (the one begin tested), so the `go` commands don't need to specify which project to get-build-test, it assumes the current one (`go-lazyfs` in this case).
 
 ## Building Docker images in Wercker
 
-This leads to an interesting inside-out arrangement.   Wercker works inside a Docker image.   It would be most efficient to just use Wercker to set up the image as desired, then "can it" and publish it ... but Wercker doesn't provide native access to Docker (you're inside Docker).
+This leads to an interesting inside-out arrangement.   Wercker works inside a Docker image.   It would be most efficient to just use Wercker to set up the image as desired, then "can it" and publish it ... but since the testing is actually occuring _within_ a Docker image, you can't reach "outside" of the Docker image (this would seriouly break the Docker security model).
 
 To get around this, wercker provides a number of custom "steps" for pushing the current image to Docker Hub, Google, etc.   It's a bit hackish, but works.   The one strangeness is that the construction of Docker images is now defined by the `wercker.yml,` _not_ in a Dockerfile.
 
@@ -159,6 +163,5 @@ The dirty work is done by the `build_ffmpeg.sh` script.   `internal/docker-push`
 
 # Whew
 
-The upshot of all this is that I can make a change to [lazycache](https://github.com/amarburg/docker-golang-ffmpeg) and an updated image will be pushed to Docker hub (eventually).
 
 More in part 2.
