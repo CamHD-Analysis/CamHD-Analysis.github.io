@@ -16,7 +16,7 @@ Let's start at the top.  The caching software is written in Go.   Following the 
 
  * [goav](https://github.com/amarburg/goav) uses [`cgo`](https://golang.org/cmd/cgo/) to import the [FFMpeg API](https://www.ffmpeg.org/) into Go.   Forked from [here](https://github.com/giorgisio/goav).
 
- * [go-prores-quicktime](https://github.com/amarburg/go-prores-ffmpeg) uses `go-quicktime` to find and retrieve individual frames within a movie, then uses `goav` to convert the enclosed data (in ProRes format) into the Go [`Image`](https://golang.org/pkg/image/) format.
+ * [go-prores-ffmpeg](https://github.com/amarburg/go-prores-ffmpeg) uses `go-quicktime` to find and retrieve individual frames within a movie, then uses `goav` to convert the enclosed data (in ProRes format) into the Go [`Image`](https://golang.org/pkg/image/) format.
 
 These packages are all used to build [go-lazycache](https://github.com/amarburg/go-lazycache), our "app." At heart it's just a web server built using the Go [`net/http`](https://golang.org/pkg/net/http/), but it performs different behaviors depending on the path passed to it.
 
