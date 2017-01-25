@@ -163,5 +163,4 @@ The dirty work is done by the `build_ffmpeg.sh` script.   `internal/docker-push`
 
 # Whew
 
-
-More in part 2.
+More about working with Google Cloud Platform in part 2.
