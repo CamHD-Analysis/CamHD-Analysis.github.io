@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  A Brief Tour of LazyCache
+title:  "A Brief Tour of LazyCache Part I, the Software"
 categories: escience lazycache
 ---
 
@@ -163,4 +163,4 @@ The dirty work is done by the `build_ffmpeg.sh` script.   `internal/docker-push`
 
 # Whew
 
-More about working with Google Cloud Platform in part 2.
+More about working with Google Cloud Platform in [part 2]({{site.baseurl}}{% post_url 2017-01-25-deploying-to-google-cloud %}).
