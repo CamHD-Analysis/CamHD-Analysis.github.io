@@ -4,6 +4,9 @@ title:  "My Notes on Trying out Deis Workflow on Google Container Engine, Part 2
 categories: escience lazycache gcp
 ---
 
+<!-- [install an application....]({{site.baseurl}}{% post_url 2017-02-14-trying-out-deis-workflow-part2 %}) -->
+
+
 You've built your [Deis-enabled Kubernetes cluster]({{site.baseurl}}{% post_url 2017-02-13-trying-out-deis-workflow %}), now what?
 
 Deis supports three basic methods for getting an app running on a Deis-ified Kubernetes cluster: by providing Docker images, by providing a Dockerfile, and through a [Heroku](http://heroku.com)-style buildpack.  The latter is very much like the Google App Engine "traditional" environment, where not only the computing, but much of the wrapper around your code is taken care of.

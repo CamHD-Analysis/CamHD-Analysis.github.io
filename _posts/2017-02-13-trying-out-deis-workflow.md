@@ -178,4 +178,4 @@ And create the admin user:
 
     % deis register http://deis.104.199.124.217.nip.io/
 
-The cluster is now ready to [install an application....]({{site.baseurl}}{% post_url 2017-02-14-trying-out-deis-workflow-part2 %})
+The cluster is now ready to install an application...
