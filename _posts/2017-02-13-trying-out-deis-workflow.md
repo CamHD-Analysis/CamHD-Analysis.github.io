@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "My Notes on Trying out Deis Workflow on Google Container Enginer"
+title:  "My Notes on Trying out Deis Workflow on Google Container Engine"
 categories: escience lazycache gcp
 ---
 
@@ -115,7 +115,7 @@ will initialize (and install the assocaited `tiller` tool on the __kubernetes cl
     Client: &version.Version{SemVer:"v2.1.3", GitCommit:"5cbc48fb305ca4bf68c26eb8d2a7eb363227e973", GitTreeState:"clean"}
     Server: &version.Version{SemVer:"v2.1.3", GitCommit:"5cbc48fb305ca4bf68c26eb8d2a7eb363227e973", GitTreeState:"clean"}
 
-Then register the package repository for Deis in Helm (on the Kubernetes cluster)
+Then register the package repository for Deis in Helm (on the Kubernetes cluster?)
 
     % helm repo add deis https://charts.deis.com/workflow
 
@@ -178,4 +178,4 @@ And create the admin user:
 
     % deis register http://deis.104.199.124.217.nip.io/
 
-The cluster is now ready to have an application installed....
+The cluster is now ready to [install an application....]({{site.baseurl}}{% post_url 2017-02-14-trying-out-deis-workflow-part2 %})
