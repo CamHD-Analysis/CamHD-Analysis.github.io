@@ -98,7 +98,7 @@ _Note, I learned most of this from a [Wercker blog post](http://blog.wercker.com
 
 > __IMPORTANT! You need to remove any newlines from the JSON file before pasting it in to the Wercker control panel:__
 
->    tr -d '\n' < /path-to-downloaded-file.json
+>    tr -d "\n" < /path-to-downloaded-file.json
 
 > __If you miss the above step all push/pull attempts made to GCR will fail and it’ll make you re-evaluate every decision in your life that led up to the moment of the 100th failure. Trust me on that one.__
 
