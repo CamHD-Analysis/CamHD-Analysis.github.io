@@ -1,7 +1,7 @@
 ---
 layout: page
 title: System Status
-permalink: /system_status/
+permalink: /system-status/
 ---
 
 Two versions of Lazycache are currently live.  These should be identical but since I have to deploy both by hand there may be some time lag.
