@@ -4,6 +4,8 @@ title:  "A Brief Tour of LazyCache Part II, Deploying to Google Cloud Platform"
 categories: escience lazycache gcp
 ---
 
+__UPDATE Feb 14 2017__:   For a bunch of reasons (mostly having to do with triggering CI builds), I decided `lazycache-deploy` didn't need to be its own repo.  It's now a sub-directory of [https://github.com/amarburg/go-lazycache-app](https://github.com/amarburg/go-lazycache-app).  I've done an imperfect modification of the text below...
+
 For totally arbitrary, er, I mean perfectly reasonable reasons, I've decided to target [Google Cloud Platform](https://cloud.google.com/) as my strawman "commercial cloud" provider.   I still believe there's a use case for deploying the software --- or some subset of it --- on a local or lab machine, but it certainly makes a lot of sense to have the server *capable* of running in the cloud, whether it's public or strictly private to service a set of local compute instances, so this seemed like a good place to start.
 
 As much as I'm learning Go on the go (heh), I'm learning GCP even more on the, uh, go.   Everything I describe here was figured out on the fly using the $300/60 day trial period for GCP, and I totally respect that I could be doing it completely wrong.    In keeping with my general philosophy, I'm trying to understand the whole process from the bottom up .... with an eye of eventually moving to automation that gives me as much functionality "for free" as possible.
@@ -17,7 +19,7 @@ At a super-high-level, my immediate goals are to:
 
 This drives a couple of engineering decisions:
 
- * Package [`go-laycache`](https://github.com/amarburg/go-lazycache) into a [Docker image](https://github.com/amarburg/lazycache-deploy)
+ * Package [`go-laycache`](https://github.com/amarburg/go-lazycache) into a [Docker image](https://github.com/amarburg/go-lazycache-app)
  * Run that Docker image in the cloud, in part so I can think long-term about a cluster of Docker images running on a cluster of instances ala [Kubernetes](https://kubernetes.io/)/[Docker Swarm](https://www.docker.com/products/docker-swarm), rather than thinking about specific instances with specific jobs.
  * Store some of the cached file results in online bucket storage.
 
@@ -50,7 +52,7 @@ As a touched on in [Part 1]({{site.baseurl}}{% post_url 2017-01-24-current-statu
 
 Lazycache is deployed similarly, but the image is stored in the Google Container Registry for the project.  This stores the Docker image in Google Cloud Storage (so you pay for it), but it's private and local to the project.
 
-As previously noted, any manipulation of the Docker image itself by Wercker requires a magic step which can escape from the Docker jail.   This is the `wercker.yml` from [`lazycache-deploy`](https://github.com/amarburg/lazycache-deploy/):
+As previously noted, any manipulation of the Docker image itself by Wercker requires a magic step which can escape from the Docker jail.   This is the `wercker.yml` from [`go-lazycache-app`](https://github.com/amarburg/go-lazycache-app/):
 
       # wercker version for box creation
       box: amarburg/golang-ffmpeg:wheezy-1.8
@@ -70,9 +72,9 @@ As previously noted, any manipulation of the Docker image itself by Wercker requ
             - internal/docker-push:
               username: _json_key
               password: $GCR_JSON_KEY_FILE
-              repository: gcr.io/cloud-project-1234/lazycache-deploy
+              repository: gcr.io/cloud-project-1234/go-lazycache-app
               registry: https://gcr.io
-              entrypoint: /go/bin/lazycache-server
+              entrypoint: /go/bin/golazycache-app
               ports: "5000"
               tag: $WERCKER_GIT_COMMIT, latest
               working-dir: $WERCKER_ROOT
@@ -151,7 +153,7 @@ The new instance is pre-loaded with the latest stable image from the [Container-
 
 The part that was hard for me to understand was that up to this point, this instance is utterly generic.   It's like a new, out-of-the-box computer with a fresh install of Linux (or Container-Optimized OS, as the case may be).   It doesn't know a thing about lazycache or who it's supposed to be.
 
-The magic comes from the `metadata-from-file` line.   This adds a [metadata tag](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) `user-data` to this instance which contains the contents of the file `cloud-init` (which is also in the [lazycache-deploy](https://github.com/amarburg/lazycache-deploy/blob/master/cloud-init) repo).   `cloud-init`, in turn is a [mostly standardized(?)](https://cloudinit.readthedocs.io/en/latest/index.html) system for putting all of your cloud instance configuration in one massive file.   Which, believe it or not, is good for repeatability.
+The magic comes from the `metadata-from-file` line.   This adds a [metadata tag](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) `user-data` to this instance which contains the contents of the file `cloud-init` (which is also in the [lazycache-deploy](https://github.com/amarburg/go-lazycache-app/blob/master/deploy/cloud-init) repo).   `cloud-init`, in turn is a [mostly standardized(?)](https://cloudinit.readthedocs.io/en/latest/index.html) system for putting all of your cloud instance configuration in one massive file.   Which, believe it or not, is good for repeatability.
 
 The cloud-init itself is pretty readable YAML (tho it bothers me to cut and paste whole files in the middle of a YAML file, but never mind that....)
 
