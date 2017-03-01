@@ -4,7 +4,10 @@ title: System Status
 permalink: /system-status/
 ---
 
-  _22 Feb 2017:_  My pace of development slowed for a while, so I took down the Cluster Enginer / Kuberenetes version.   It was costing real money to keep it going.    We'll see what the running costs on the App Engine version are like...
+  __22 Feb 2017:__ _My pace of development slowed for a while, so I took down the Cluster Enginer / Kuberenetes version.   It was costing real money to keep it going.    We'll see what the running costs on the App Engine version are like..._
+
+  __28 Feb 2017:__  _And to add insult to injury, my $300 free Google Cloud trial has ended and everything has ground to a halt.  It will take me a few days to
+  set up billing, then things will be up again....._
 
 
 <!-- ~~Two~~ One version of Lazycache is currently live.  These should be identical but since I have to deploy both by hand there may be some time lag. -->
