@@ -6,7 +6,7 @@ permalink: /system-status/
 
   __09 March 2017:__   _Back up with the App Engine version.   Now at a new URL (below)_
 
-  __To keep costs down, I've throttled the App Engine version back to a minimum of 1 and maximum of 5 instances.__
+  __To keep costs down, I've throttled the App Engine version back to a minimum of 1 and maximum of 4 instances.  This is configured in the App Engine configuration file  [app.yaml](https://github.com/amarburg/go-lazycache-app/blob/master/deploy/g_appengine/app.yaml) __
 
 ----
 
