@@ -63,7 +63,7 @@ The application can then be run:
 This will start the application, which will listen on the local port 5000.   Opening a web browser to `http://localhost:5000/org/oceanobservatories/rawdata/files/` should produce JSON describing the contents of the directory [`http://rawdata.oceanobservatories.org/files/`](http://rawdata.oceanobservatories.org/files/) on the OOI Raw data portal.
 
 {:center}
-![]({{site.baseurl}}/images/lazycache_sample_page.jpg)
+![Sample image of Lazycache]({{site.baseurl}}/images/lazycache_sample_page.jpg)
 
 _Technically speaking `http://localhost:5000/org/oceanobservatories/rawdata/` would work, but the top level at the rawdata archive, `http://rawdata.oceanobservatories.org/` isn't indexable...._
 
