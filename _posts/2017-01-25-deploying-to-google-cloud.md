@@ -153,7 +153,7 @@ The new instance is pre-loaded with the latest stable image from the [Container-
 
 The part that was hard for me to understand was that up to this point, this instance is utterly generic.   It's like a new, out-of-the-box computer with a fresh install of Linux (or Container-Optimized OS, as the case may be).   It doesn't know a thing about lazycache or who it's supposed to be.
 
-The magic comes from the `metadata-from-file` line.   This adds a [metadata tag](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) `user-data` to this instance which contains the contents of the file `cloud-init` (which is also in the [lazycache-deploy](https://github.com/amarburg/go-lazycache-app/blob/master/deploy/cloud-init) repo).   `cloud-init`, in turn is a [mostly standardized(?)](https://cloudinit.readthedocs.io/en/latest/index.html) system for putting all of your cloud instance configuration in one massive file.   Which, believe it or not, is good for repeatability.
+The magic comes from the `metadata-from-file` line.   This adds a [metadata tag](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) `user-data` to this instance which contains the contents of the file `cloud-init` (which is also in the [lazycache-deploy](https://github.com/amarburg/go-lazycache-app/blob/master/deploy/gce_standalone/cloud-init) repo).   `cloud-init`, in turn is a [mostly standardized(?)](https://cloudinit.readthedocs.io/en/latest/index.html) system for putting all of your cloud instance configuration in one massive file.   Which, believe it or not, is good for repeatability.
 
 The cloud-init itself is pretty readable YAML (tho it bothers me to cut and paste whole files in the middle of a YAML file, but never mind that....)
 

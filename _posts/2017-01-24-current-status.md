@@ -60,7 +60,7 @@ The application can then be run:
     Fs at http://0.0.0.0:5000/org/oceanobservatories/rawdata/
     ....
 
-This will start the application, which will listen on the local port 5000.   Opening a web browser to `http://localhost:5000/org/oceanobservatories/rawdata/files/` should produce JSON describing the contents of the directory [`http://rawdata.oceanobservatories.org/files/`](http://rawdata.oceanobservatories.org/files/) on the OOI Raw data portal.
+This will start the application, which will listen on the local port 5000.   Opening a web browser to `http://localhost:5000/org/oceanobservatories/rawdata/files/` should produce JSON describing the contents of the directory [`https://rawdata.oceanobservatories.org/files/`](https://rawdata.oceanobservatories.org/files/) on the OOI Raw data portal.
 
 {:center}
 ![Sample image of Lazycache]({{site.baseurl}}/images/lazycache_sample_page.jpg)
@@ -72,7 +72,7 @@ _Technically speaking `http://localhost:5000/org/oceanobservatories/rawdata/` wo
 
 Docker forms the next layer of pyramid of tools.   Lazycache can certainly be run as a standalone program, but is intended for deployment as a Docker container.  This brings all of the deployment and versioning benefits of Docker, and also lets us control dependencies (like the somewhat tricky FFMpeg versioning).
 
-Files related to deploying lazycache are stored in a separate repository, [lazycache-deploy](https://github.com/amarburg/lazycache-deploy).   Within that repo, the Dockerfile
+Files related to deploying lazycache are stored in a separate repository, [lazycache-deploy](https://github.com/amarburg/go-lazycache-app).   Within that repo, the Dockerfile
 essentially replicates the steps detailed above:
 
     FROM amarburg/golang-ffmpeg:wheezy-1.8
