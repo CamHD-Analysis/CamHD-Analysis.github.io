@@ -14,15 +14,15 @@ My tools are ... a little more complicated.   I started with the core algorithm 
 
   *  On top of this, [go-lazyquicktime](https://github.com/amarburg/go-lazquicktime) allows extraction of images from Quicktime files either locally or over HTTP, again with transparent caching.  
   <br/>
-  go-lazyquicktime is build on the filesystem abstraction layer [go-layzfs](https://github.com/amarburg/go-lazyfs) which allows random, read-only access to both local files  and files served by HTTP (like at the CI).   It also support transparent caching of results.
+  go-lazyquicktime is build on the filesystem abstraction layer [go-layzfs](https://github.com/amarburg/go-lazyfs) which allows random, read-only access to both local files  and files served by HTTP (like at the CI).   It also supports transparent caching of those file reads.
 
-  * From there, I built three APIs for go-lazyquicktime.   
+  * From there, I built three APIs on top of go-lazyquicktime.   
 
-    * [cgo-lazyquicktime](https://github.com/amarburg/cgo-lazyquicktime) defines a C wrapper around go-lazyquicktime, which lets lazyquicktime be used as a shared library to extend other languages.
+    * [cgo-lazyquicktime](https://github.com/amarburg/cgo-lazyquicktime) is a C (well, CGo) wrapper around go-lazyquicktime, which lets lazyquicktime be used as a shared library to extend other languages.
 
-    * [cython-lazyquicktime](https://github.com/amarburg/cython-lazyquicktime) is [cython](http://cython.org) wrapper around cgo-lazyquicktime which  brings the whole go-lazyquicktime tools into Python.
+    * [cython-lazyquicktime](https://github.com/amarburg/cython-lazyquicktime) is [cython](http://cython.org) wrapper around cgo-lazyquicktime which  brings the go-lazyquicktime tools into Python.
 
-    * [go-lazycache](https://github.com/amarburg/go-lazycache) / [go-lazycache-app](https://github.com/amarburg/go-lazycache-app) is a web server application which provides an HTTP API for browsing videos and accessing individual images.  It also has strong caching tools built-in.   I've packaged it as a Docker image so it can be deployed locally.   Just to confuse things, I've also written a Python wrapper around the calls to lazycache.  Because this is just a thin wrapper around HTTP calls, it is very lightweight.
+    * [go-lazycache](https://github.com/amarburg/go-lazycache) / [go-lazycache-app](https://github.com/amarburg/go-lazycache-app) is a web server application which provides an HTTP API for browsing the CI and accessing individual images.  It also has strong caching tools built-in.   I've packaged it as a Docker image so it can be deployed locally.   Just to confuse things, I've also written a Python wrapper around the calls to lazycache.  Because this is just a thin wrapper around HTTP calls, it is very lightweight.
 
 Whew, that's confusing.    Here's a summary:
 
@@ -61,9 +61,9 @@ Hard to deploy?</td>
     <td>HTTP</td>
     <td>Network bandwidth to CI.<br/>
     All communication from user to service over HTTP.</td>
-    <td>Does not require massive local storage
+    <td>Does not require massive local storage.<br/>
 Efficient for small numbers of frames from large numbers of videos</td>
-  <td>Performance questions.</br>
+  <td>Performance questions.<br/>
 Complexity.<br/>
 Inefficient for large numbers of frames from single video</td>
   </tr>
@@ -82,21 +82,21 @@ Inefficient for large numbers of frames from single video</td>
 
 I developed a set of [sample Jupyter notebooks](https://github.com/CamHD-Analysis/lazyqt_demo_notebooks) to benchmark each of these methods.  Note that running PyLazyQuicktime requires a custom Jupyter environment which isn't publicly available yet.
 
-All benchmarks were run on the (CamHD Compute Engine)[https://chiron.ldeo.columbia.edu].   Each benchmark required extracting/downloading a randomized set of frames from a single movie.  Performance is measured in average ms of wall clock per frame extracted.
+All benchmarks were run on the [CamHD Compute Engine](https://chiron.ldeo.columbia.edu).   Each benchmark required extracting/downloading a randomized set of frames from a single movie.  Performance is measured in average ms of wall clock per frame extracted.
 
 "Direct Disk Access" means the tool is reading directly from the filesystem (from the movies that are local to the Compute Engine).  
 
-"Local HTTP Server" means accessing the local files, but through an Nginx instance running in a Docker container.
+"Local HTTP Server" means accessing the local files through an Nginx instance running in a Docker container.
 
-"Rutgers CI" means pulling data directly from Rutgers via HTTP.
+"Rutgers CI" means pulling data from Rutgers via HTTP.
 
-"Local Lazycache Server" is an instance of (lazycache)[https://github.com/amarburg/go-lazycache] running on the Compute Engine itself.   This instance is set up to mirror the three different data sources: local filesystem, local via Nginx and direct from Rutger.
+"Local Lazycache Server" is an instance of [lazycache](https://github.com/amarburg/go-lazycache) running on the Compute Engine itself.   This instance is set up to mirror the three different data sources: local filesystem, local via Nginx and direct from Rutgers.
 
 "Google App Engine Lazycache Server" is an instance of Lazycache running in Google App Engine.   It does not have any local copies of the videos and can only pull from Rutgers.
 
 "No[t] cached" means no caching anywhere in the system.
 
-"Yes cached" means pulling from the cache (running the benchmark twice and taking the second result).
+"Yes cached" means data pulled from cache -- in this case, running the benchmark twice and taking the second result.
 
 
 
@@ -182,8 +182,8 @@ All benchmarks were run on the (CamHD Compute Engine)[https://chiron.ldeo.columb
   </tr>
 </table>
 
-PyCamHD and PyLazyQt pull directly from local disk and produce the fastest results, with a slight edge to PyCamHD.   The overhead for pulling the data from a local HTTP server (rather than from the filesystem) is surprisingly minimal, while extracting the data directly from Rutgers brings a roughly order of magnitude decrease in performance.
+PyCamHD and PyLazyQt pull directly from local disk and produce the fastest results, with a slight edge to PyCamHD.   The overhead for pulling the data from a local HTTP server (rather than from the filesystem) is surprisingly minimal, while extracting the data directly from Rutgers brings a roughly order of magnitude decrease in performance --- with the advantage that it requires no local copies of the video files.
 
-Using Lazycache brings its own performance penalties requiring roughly 20x direct conversion   Of course there are almost certainly inefficiencies in the system.   The complexity of LazyCache makes these inefficiencies more difficult to find and fix.    However, as shown LazyCache offers a significant speed advantage when pulling from cache.
+Using Lazycache brings its own performance penalties, requiring roughly 20x direct conversion.   Of course there are almost certainly inefficiencies in the system.   The complexity of LazyCache makes these inefficiencies more difficult to find and fix.    However, as shown LazyCache offers a significant speed advantage when pulling from cache.
 
 Finally, the tests against the LazyCache instance running in the cloud shows the performance penalty from contacting the Google server across the internet, even when pulling from the cache.
