@@ -80,7 +80,7 @@ Inefficient for large numbers of frames from single video</td>
 
 # Benchmarking
 
-I developed a set of [sample Jupyter notebooks](https://github.com/CamHD-Analysis/lazyqt_demo_notebooks) to benchmark each of these methods.  Note that running PyLazyQuicktime requires a custom Jupyter environment which isn't publicly available yet.
+I developed a set of [sample Jupyter notebooks](https://github.com/CamHD-Analysis/jupyter-lazyqt-benchmarking.git) to benchmark each of these methods.  Note that running PyLazyQuicktime requires a custom Jupyter environment which isn't publicly available yet.
 
 All benchmarks were run on the [CamHD Compute Engine](https://chiron.ldeo.columbia.edu).   Each benchmark required extracting/downloading a randomized set of frames from a single movie.  Performance is measured in average ms of wall clock per frame extracted.
 
