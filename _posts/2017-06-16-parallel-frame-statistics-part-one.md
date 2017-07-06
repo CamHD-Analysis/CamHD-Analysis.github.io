@@ -18,7 +18,7 @@ Beyond that, I wanted:
 
  * Maximum transparency, minimum confusion
 
- I also recognize that while I want a robust, stable solution that doesn't require much babysitting, I also need to get to working relatively quickly, and long-term stability isn't a huge concern.   My booming dot-com isn't relying on the cluster being available 24/7, and I'm happy to restart it now and again.
+I also recognize that while I want a robust, stable solution that doesn't require much babysitting, I also need to get to working relatively quickly, and long-term stability isn't a huge concern.   My booming dot-com isn't relying on the cluster being available 24/7, and I'm happy to restart it now and again.
 
 I'm pretty happy with the system described here.  Of course, there's still room for improvement, but it has allowed me to get to bulk processing in a relatively short timeframe (particularly including all the time waiting to see if videos are being processed correctly and all of the blind alleys).
 
@@ -34,11 +34,11 @@ My solution is built on three components:
 
 My "workers" (the code to analyze a video) is stored in a Docker image.   Docker swarm is then used to start that image on multiple computers (my "swarm" of computers), to monitor those jobs, restart them if they fail, etc.    
 
-The workers themselves are tasked with RQ.   RQ itself is pretty neat, it uses Python pickle to "freeze dry" an entire Python function call (including arguments) and store it in Redis.    The workers watch that list, pull those function calls off the stack and execute the function within.   What's neat about this is that the worker doesn't require any application specific code, it's basically (in pseudocode):
+The workers themselves are tasked by RQ.   RQ itself is pretty neat, it uses Python pickle to "freeze dry" an entire Python function call (including arguments) and store it in Redis.    The workers watch that list, pull those function calls off the stack and execute the function within.   What's neat about this is that the worker doesn't require any application specific code, it's basically (in pseudocode):
 
     connect to Redis database
     while there's work to do, do work
 
-The python script doesn't need to any application-specific `import`s or etc.   __However,__ it does need to be able to find the necessary code somewhere in the Python path.    This makes Docker valuable as I can write a long and complicated Dockerfile which installs all of the dependencies for my crazy video analysis code, store it in a Docker image, and rapidly push it out to a bunch of computers in a repeatable manner.
+The python script doesn't need to any application-specific `import`s or etc.   __However,__ it does need to be able to find the necessary code somewhere in the Python path.    This makes Docker valuable as I can write a long and complicated Dockerfile which installs all of the dependencies for my crazy video analysis code, then rapidly push that image out to a bunch of computers in a repeatable manner.
 
 So, with all that said, my cluster code is on Github as [camhd-motion-analysis-deploy](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy).   In later posts I'll walk through the steps to go from nothing to cluster.
