@@ -37,35 +37,37 @@ It's based on my
 which is built on top of the canonical [GoLang Docker
 image](https://hub.docker.com/_/golang/) built on Debian --- I used full-fat
 Debian, rather than Alpine or similar lightweight Linuxes, to ensure I could get
-all of audio-visual dependencies needed for ffmpeg.   The Dockerfile then builds
-a recent version of [ffmpeg](http://ffmpeg.org/) from source (using [this script](https://github.com/amarburg/docker-golang-ffmpeg/blob/master/build_ffmpeg.sh)).
+all of audio-visual dependencies needed for ffmpeg.   The docker-golang-ffmpeg includes [ffmpeg](http://ffmpeg.org/) built from source (using [this script](https://github.com/amarburg/docker-golang-ffmpeg/blob/master/build_ffmpeg.sh)).
+
+The standard `go get` mechanism is used to download the source code from
+Github into the Go environment.
 
     RUN go get -v github.com/amarburg/go-lazycache
 
     ## Hot patch local files into the repo
     ADD *.go $GOPATH/src/amarburg/go-lazycache/app/
 
-The standard `go get` mechanism is used to download the source code from
-Github into the Go environment.   I "hot patch" the source code with
+I "hot patch" the source code with
 the `main.go` from the current directory, which contains configuration
 specific to the Docker version.  In the long run this shouldn't be necessary,
-with more of the configuration occurring through config files or environment variables.
+with more of the configuration shifting through config files or environment variables, but it was a cheap and easy way to implement version-specific changes.
 Even now the differences are relatively minor.
+
+Then get dependencies, build the application and copy it to `$GOPATH/`:
 
     WORKDIR $GOPATH/src/github.com/amarburg/go-lazycache/app
     RUN go get -v .
     RUN go build -o lazycache .
     RUN cp lazycache $GOPATH/
 
-Get dependencies, build the application and copy it to `$GOPATH/`.
+And some Docker image configuration.   Lazycache uses post 8080 by default,
+the standard port of microservices in [GAE](https://cloud.google.com/appengine/).
 
     ENV LAZYCACHE_PORT=8080
     CMD $GOPATH/lazycache
     EXPOSE 8080
 
-Sets the default port for the app through environmental variables.
-
-Once built, I store a [copy of the image at Docker Hub](https://hub.docker.com/r/amarburg/lazycache_prod/).
+Once built, I push a copy of the image to [Docker Hub](https://hub.docker.com/r/amarburg/lazycache_prod/).
 
 ## image-analysis
 
@@ -76,22 +78,21 @@ is currently orchestrated through a [Rakefile](https://github.com/CamHD-Analysis
 
 There are actually two worker images defined:
 
-  1. `worker_rq_prod` is the _production_ image, which builds the
-image analysis tools from a clean check-out from Github.
-  1. `worker_rq_test` is the _test_ image.  It copies
-the image analysis source tree from the local disk.
+  1. `worker_rq_prod` is the _production_ image, which builds
+`camhd_motion_analysis` from a clean clone from Github.
+  1. `worker_rq_test` is the _test_ image.  It copies the `camhd_motion_analysis` source from a the local disk, then builds in the Docker image.
 
-Beyond that, the `Dockerfiles` are similar.  Both depend on a [`worker_rq_base` image](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Dockerfile_rq_base)
+The `Dockerfiles` are otherwise similar.  Both depend on a [`worker_rq_base` image](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Dockerfile_rq_base)
 which is a base Ubuntu image with all manner of dependencies installed,
-including OpenCV and gcc through `apt`, [miniconda]() and a whack of Python tools,
-and my `pycamhd-lazycache` Python library.
+including OpenCV and gcc through `apt`, [miniconda](), a whack of Python tools,
+and my [`pycamhd-lazycache`](https://github.com/CamHD-Analysis/pycamhd-lazycache) Python library.
 
-The [`Dockerfile_rq_prod`](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Dockerfile_rq_prod) file itself is pretty straightforward:
+The [`Dockerfile_rq_prod`](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Dockerfile_rq_prod) file itself is pretty straightforward.  It starts from the base image:
 
     FROM camhd_motion_analysis_rq_worker_base:latest
     MAINTAINER Aaron Marburg <amarburg@apl.washington.edu>
 
-Start from the base image.
+Clone the code from Github, and initialize the Git submodules, then provide an initial default configuration to [conan](https://www.conan.io)
 
     WORKDIR /code
     RUN git clone https://github.com/CamHD-Analysis/camhd_motion_analysis.git
@@ -102,7 +103,7 @@ Start from the base image.
     ## Initial conan configuration
     RUN conan config set settings_defaults.compiler.libcxx=libstdc++11
 
-Clone the code from Github, and initialise the Git submodules, then provide an initial default configuration to [conan](https://www.conan.io)
+Build and install the C++ portion of the app.
 
     ENV BUILD_DIR docker-Release
     ENV VERBOSE 1
@@ -113,16 +114,16 @@ Clone the code from Github, and initialise the Git submodules, then provide an i
     RUN make install && make clean
     RUN ldconfig
 
-Build and install the C++ portion of the app.
+Define an volume for storing the results,
 
     VOLUME /output/CamHD_motion_metadata
 
-Define an volume for storing the results,
+Finally, the standard entrypoint to the image is a [local shell file](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/launch_worker.sh).  
 
     ADD launch_worker.sh  /code
     ENTRYPOINT ["/code/launch_worker.sh"]
 
-Finally, the standard entrypoint to the image is a [local shell file](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/launch_worker.sh).  The shell script provides a place for validation before launching the app.  In
+The shell script provides a place for validation before launching the app.  In
 this case it checks that the output directory contains a `README.md` file,
 my lame attempt at checking that it's really a clone of [CamHD_motion_metadata](https://github.com/CamHD-Analysis/CamHD_motion_metadata).
 
@@ -136,22 +137,32 @@ my lame attempt at checking that it's really a clone of [CamHD_motion_metadata](
     /code/camhd_motion_analysis/python/rq_worker.py "$@"
 
 
-
-As above, I used Docker tagging to keep track of various image versions, and
-host the production images on [Docker Hub](https://hub.docker.com/r/amarburg/camhd_motion_analysis_rq_worker/).
-If I was really worried about security, of course, I could use a private Docker repo,
-but then I would have to think about authentication...
+Again, I use Docker tags to keep track of image versions, and
+distribute the production images through [Docker Hub](https://hub.docker.com/r/amarburg/camhd_motion_analysis_rq_worker/).
+If I was really worried about security, of course, I could use a private Docker repo,  but then I would have to think about authentication...
 
 
 While the production workers run in a Docker swarm, and are orchestrated by RQ,
-I can run the Docker image standalone to test the worker code.   This is all documentated
-(sloppily) in the [Rakefile](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Rakefile) in the repo.
+I can run the Docker image standalone to test the worker code.   This is all
+documented (sloppily) in the
+[Rakefile](https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Rakefile)
+in the repo.
 
-In production, secrets and configuration are passed to the Docker images using an
-environment variable file:
+Secrets and configuration are passed to the Docker images using an
+environment variable file using the `--env-file` arg to Docker:
 
     RQ_REDIS_URL=redis://:myredispassword@my.redis.ip.address/0
     OUTPUT_DIR=/output/CamHD_motion_metadata
 
 I can test different configurations by swapping in different sets of configuration
-variables to, for example, connect to testing or production Redis servers.
+variables:
+
+    docker run --env-file prod.env amarburg/camhd_motion_analysis_rq_worker:latest
+
+or
+
+    docker run --env-file test.env amarburg/camhd_motion_analysis_rq_worker:latest
+
+For example, to have the workers connect to different Redis instances (or different queues on the same instance).
+
+__See also [the introductory post]({{ site.baseurl }}{% post_url 2017-06-16-scaling-up-frame-analysis-part-one %}) in this series and [the third post]({{ site.baseurl }}{% post_url  2017-07-06-scaling-up-frame-analysis-part-three %}) on working with RQ.__
