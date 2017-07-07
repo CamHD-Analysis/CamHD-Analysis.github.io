@@ -22,7 +22,7 @@ movie. From the top down, then:
  1. The RQ worker is written in Python.  It receives a movie from the work queue, and pulls the movie metadata from Lazycache.
  1. It then uses `dask.threaded` to schedule an array of jobs across all of the local cores, one per frame to be analyzed.
  1. For each frame, an instance of the `frame_stats` C++ program:
-    1. Retrieves two frames from Lazycache ... this will be slow and is essentially and IO wait.
+    1. Retrieves two frames from Lazycache ... this will be a slow IO wait.
     1. Performs optical flow using (currently) the CPU implementations of [DualLTV1](http://docs.opencv.org/2.4.13.2/modules/video/doc/motion_analysis_and_object_tracking.html#createoptflow-dualtvl1) in OpenCV 2.4.x.   Internally, this uses OpenCV's [`parallel_for_`](https://github.com/opencv/opencv/blob/master/modules/core/src/parallel.cpp) abstraction to perform multithreaded loop unrolling.   I use the standard _yakkety_ Ubuntu packages for OpenCV, which I _believe_ means [TBB](https://www.threadingbuildingblocks.org) is used (it's the first choice in the `#ifdef` tree).  
     1. Performs an optimization using [Ceres](http://ceres-solver.org).  I believe Ceres will use multiple threads to evaluate the Jacobian, though I'm not sure if it's necessary in this case.
     1. Does some other bookkeeping, resulting in the frame's results being stored as JSON.
