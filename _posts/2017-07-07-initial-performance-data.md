@@ -8,14 +8,16 @@ While I've been working away on [documentation]({{ site.baseurl }}{% post_url 20
 [analysis procedure]({{ site.baseurl }}{% post_url 2017-07-06-scaling-up-frame-analysis-part-three %}),
 my swarms have been humming away in the background, working through the CamHD archive.   As of today (July 7 2017), I've
 done optical flow processing on the bulk of 2016, with 2017 in the queue.   The region analysis still
-requires careful quality control, but it requires far less processing time.
+requires careful quality control, so I haven't started it yet.   _But_ it requires far less processing time.
 
-Before I start throwing out numbers, let me briefly outline how the processing works.  This is jumping ahead a bit, but provides useful context.   I don't pretend this is an optimal, and I'm sure I could reduce the
-computational cost.  On the other hand, I'm interested in the relative numbers.   Never mind whether
-my algorithm _should_ take an hour per movie.  Instead, given a job which takes an hour per movie, how does that change across my computing options.
+Before I start throwing out numbers, let me briefly outline how the processing
+works.  It's important to recognize the multiple places where threading is used
+to max out throughput. I don't pretend this is an optimal, and I'm sure I could
+reduce the computational cost
 
-It's important to recognize the multiple places where threading is used to max out throughput.  One "job" is the optical flow processing of one movie.   This requires performing an expensive optical flow calculation on every 10'th frame in the movie.
-From the top down, then:
+One "job" is the optical flow processing of one movie.   This requires
+performing an expensive optical flow calculation on every 10'th frame in the
+movie. From the top down, then:
 
  1. The RQ worker is written in Python.  It receives a movie from the work queue, and pulls the movie metadata from Lazycache.
  1. It then uses `dask.threaded` to schedule an array of jobs across all of the local cores, one per frame to be analyzed.
