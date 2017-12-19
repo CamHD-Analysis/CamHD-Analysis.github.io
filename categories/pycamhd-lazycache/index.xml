@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pycamhd Lazycache on CamHD Video Analysis</title>
-    <link>https://camhd-analysis.github.io/public-www/categories/pycamhd-lazycache/</link>
+    <link>https://camhd-analysis.github.io/categories/pycamhd-lazycache/</link>
     <description>Recent content in Pycamhd Lazycache on CamHD Video Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 15 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://camhd-analysis.github.io/public-www/categories/pycamhd-lazycache/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://camhd-analysis.github.io/categories/pycamhd-lazycache/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Benchmarking Frame Access Methods (again)</title>
-      <link>https://camhd-analysis.github.io/public-www/post/2017-05-15-benchmarking-pycamhd-part-two/</link>
+      <link>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</link>
       <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/public-www/post/2017-05-15-benchmarking-pycamhd-part-two/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</guid>
       <description>I&amp;rsquo;ve made an effort to cleanup and regularize my benchmarking code, and have tested it on my desktop here (in Seattle), on the CamHD Compute Engine and on Google Cloud instances.
 As detailed previously, we&amp;rsquo;re exploring a few different methods for efficiently extracting individual frames from CamHD movies. Tim&amp;rsquo;s pycamhd module does this extraction in native Python (with help from FFMpeg). My lazycache tool is designed to run as a service with an HTTP API, although coincidentally I&amp;rsquo;ve also developed a Python wrapper around the core Go-based frame extraction code.</description>
     </item>
     
     <item>
       <title>Benchmarking Frame Access Methods</title>
-      <link>https://camhd-analysis.github.io/public-www/post/2017-05-01-benchmarking-pycamhd/</link>
+      <link>https://camhd-analysis.github.io/post/2017-05-01-benchmarking-pycamhd/</link>
       <pubDate>Mon, 01 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/public-www/post/2017-05-01-benchmarking-pycamhd/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-05-01-benchmarking-pycamhd/</guid>
       <description>Tim and I (Aaron) have been exploring different strategies for making the CamHD video more accessible. Following our own paths, we&amp;rsquo;ve come up with two closely related, yet subtly different tools for pulling individual frames from the HD Quicktime/ProRes files.
 There are two big families of tools:
 Tim has developed PyCamHD, a Python library which can efficiently extract single frames from a Quicktime file.
@@ -35,10 +35,10 @@ My tools are &amp;hellip; a little more complicated.</description>
     
     <item>
       <title>CamHD Compute Hub is Live!</title>
-      <link>https://camhd-analysis.github.io/public-www/post/2017-05-01-camhdhub-is-live/</link>
+      <link>https://camhd-analysis.github.io/post/2017-05-01-camhdhub-is-live/</link>
       <pubDate>Mon, 01 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/public-www/post/2017-05-01-camhdhub-is-live/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-05-01-camhdhub-is-live/</guid>
       <description>As part of our mission to provide tools for processing CamHD video data, we&amp;rsquo;ve established a JupyterHub instance which has a local copy of a subset of the full HD (uncompressed ProRes) CamHD video.
 Please see the landing page HERE.</description>
     </item>
