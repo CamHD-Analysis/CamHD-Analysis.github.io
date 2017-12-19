@@ -1,4 +1,5 @@
 baseURL = "https://camhd-analysis.github.io/public-www/"
+publishDir = "site/public-www/"
 languageCode = "en-us"
 title = "CamHD Video Analysis"
 theme = "ananke"
@@ -25,5 +26,5 @@ enableRobotsTXT = true
   linkedin = ""
   # choose a background color from any on this page: http://tachyons.io/docs/themes/skins/ and preface it with "bg-"
   background_color_class = "bg-black"
-  #featured_image = "/images/EX1605L3_DIVE22_20160708_064100.jpg"
+  featured_image = "/images/header_one.jpg"
   recent_posts_number = 10
