@@ -1,4 +1,4 @@
-baseURL = "https://camhd-analysis.github.io/public-www/"
+baseURL = "https://camhd-analysis.github.io/"
 publishDir = "site/public-www/"
 languageCode = "en-us"
 title = "CamHD Video Analysis"
