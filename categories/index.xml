@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on CamHD Video Analysis</title>
+    <link>https://camhd-analysis.github.io/public-www/categories/</link>
+    <description>Recent content in Categories on CamHD Video Analysis</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://camhd-analysis.github.io/public-www/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ci Lazycache</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/ci-lazycache/</link>
+      <pubDate>Thu, 13 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/ci-lazycache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Escience</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/escience/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/escience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Escience Lazycache</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/escience-lazycache/</link>
+      <pubDate>Tue, 24 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/escience-lazycache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Escience Lazycache Gcp</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/escience-lazycache-gcp/</link>
+      <pubDate>Mon, 13 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/escience-lazycache-gcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gce Lazycache</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/gce-lazycache/</link>
+      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/gce-lazycache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lazycache</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/lazycache/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/lazycache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lazycache Gcp</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/lazycache-gcp/</link>
+      <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/lazycache-gcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lazycache Gcp Docker</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/lazycache-gcp-docker/</link>
+      <pubDate>Wed, 05 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/lazycache-gcp-docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lazycache Gcp Docker Swarm</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/lazycache-gcp-docker-swarm/</link>
+      <pubDate>Fri, 07 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/lazycache-gcp-docker-swarm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lazyfs Go</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/lazyfs-go/</link>
+      <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/lazyfs-go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pycamhd Lazycache</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/pycamhd-lazycache/</link>
+      <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/pycamhd-lazycache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Regions</title>
+      <link>https://camhd-analysis.github.io/public-www/categories/regions/</link>
+      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/categories/regions/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

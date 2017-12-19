@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>CamHD Video Analysis  | Scaling out Image Analysis, Part Three: the Redis work queue</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.31.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    <link href='https://camhd-analysis.github.io/public-www/dist/main.css' rel='stylesheet' type="text/css" />
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Scaling out Image Analysis, Part Three: the Redis work queue" />
+<meta property="og:description" content="My image analysis tools are trivially parallelizable. That is, I have a worker which requires a reasonable block of time (an hour or two) to process one video. I can process many videos by running this worker on a bunch of computers, and have them slowly chug through all of the videos on the CI, one at a time.
+To control this mayhem, I&rsquo;m using a work queue system built around the RQ library for Python." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://camhd-analysis.github.io/public-www/post/2017-07-06-scaling-up-frame-analysis-part-three/" />
+
+
+
+<meta property="article:published_time" content="2017-07-06T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-07-06T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Scaling out Image Analysis, Part Three: the Redis work queue">
+<meta itemprop="description" content="My image analysis tools are trivially parallelizable. That is, I have a worker which requires a reasonable block of time (an hour or two) to process one video. I can process many videos by running this worker on a bunch of computers, and have them slowly chug through all of the videos on the CI, one at a time.
+To control this mayhem, I&rsquo;m using a work queue system built around the RQ library for Python.">
+
+
+<meta itemprop="datePublished" content="2017-07-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-07-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="681">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Scaling out Image Analysis, Part Three: the Redis work queue"/>
+<meta name="twitter:description" content="My image analysis tools are trivially parallelizable. That is, I have a worker which requires a reasonable block of time (an hour or two) to process one video. I can process many videos by running this worker on a bunch of computers, and have them slowly chug through all of the videos on the CI, one at a time.
+To control this mayhem, I&rsquo;m using a work queue system built around the RQ library for Python."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://camhd-analysis.github.io/public-www/" class="f3 fw2 hover-white no-underline white-90 dib">
+      CamHD Video Analysis
+    </a>
+    <div class="flex-l items-center">
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/public-www/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <p class="f6 b helvetica tracked">
+        
+        POST
+      </p>
+      <h1 class="f1 athelas">
+        Scaling out Image Analysis, Part Three: the Redis work queue
+      </h1>
+        
+        
+      <time class="f6 mv4 dib tracked" datetime="2017-07-06T00:00:00Z">
+        July 6, 2017
+      </time>
+      <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray">
+        
+
+<p>My image analysis tools are trivially parallelizable.  That is, I have a worker
+which requires a reasonable block of time (an hour or two) to process one video.
+I can process many videos by running this worker on a bunch of computers, and
+have them slowly chug through all of the videos on the CI, one at a time.</p>
+
+<p>To control this mayhem, I&rsquo;m using a work queue system built around the <a href="http://python-rq.org">RQ</a>
+library for Python.   I&rsquo;ve created similar systems in the past with <a href="http://resque.github.io">Resque</a> for Ruby,
+so the concept is pretty familiar to me.   The work queue model provides
+just enough robustness, particularly combined with tools that can be selective about
+what jobs go into the queue, and which jobs are actually run when pulled from the queue.</p>
+
+<p>In this case, the input for a worker is an URL to a ProRes file at the <a href="https://rawdata.oceanobservatories.org/files/RS03ASHS/PN03B/06-CAMHDA301/2017/06/14/">raw data
+repository</a>,
+and the output is a corresponding
+<a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata/blob/master/docs/OpticalFlow.md"><code>optical_flow.json</code></a>
+file.   I can test for completeness by checking if a <code>.json</code> file exists for
+each file on the raw data archive.  Outside of extraordinary circumstances, this
+lets me write a simple &ldquo;make sure all of the JSON files exist&rdquo; script which
+injects new jobs into the work queue for any video that doesn&rsquo;t have a
+corresponding JSON.   If I want to invalidate an optical flow file, I can simply
+delete it and re-run the script.</p>
+
+<p>On the other end, the worker won&rsquo;t overwrite an existing JSON file unless explicitly ordered to do so.
+Again, this means I can (accidentally) over-stock the work queue with redundant
+jobs requests and not burn a lot of cycles making the same file over and over again.</p>
+
+<p>RQ itself is built on top of <a href="https://redis.io">Redis</a> datastore.  I&rsquo;m not really
+plumbing the depths of either RQ or Redis, as the default settings work fine.  In this case,
+I&rsquo;m running Redis on a Google Cloud Platform instance** to make it accessible to a cluster running on
+a pile of desktops in my office and to a second cluster running in the Google cloud.  In practice, you could run Redis on
+a local machine for greater security.</p>
+
+<p>** I&rsquo;m running the <a href="https://github.com/bitnami/bitnami-docker-redis">Bitnami Redis container</a> on a GCP instance.  It&rsquo;s totally stock other than <a href="https://docs.bitnami.com/virtual-machine/components/redis/#how-to-change-the-redis-password">setting the password</a>.</p>
+
+<h1 id="worker">Worker</h1>
+
+<p>With RQ, the worker side is trivial.   It doesn&rsquo;t need to be customized
+to the application at all, as long as the relevant Python modules can be
+found in the Python path.   The full worker source code is <a href="https://github.com/CamHD-Analysis/camhd_motion_analysis/blob/master/python/rq_worker.py">here</a>,
+but the majority is taken up with command line argument parsing.  Here&rsquo;s the business end:</p>
+
+<pre><code>conn = Redis.from_url(redis_host)
+with Connection(conn):
+    w = Worker( args.queues )
+    w.work()
+</code></pre>
+
+<p>That&rsquo;s it: connect to Redis, get work, do the work.  Of course, to do the work,
+Python needs to be able to find all sorts of Python and system dependencies, hence the use of <a href="{{ site.baseurl }}{% post_url 2017-07-05-scaling-up-frame-analysis-part-two %}">Docker images</a></p>
+
+<h1 id="job-injection">Job Injection</h1>
+
+<p>The job injector isn&rsquo;t actually much more complicated (<a href="https://github.com/CamHD-Analysis/camhd_motion_analysis/blob/master/python/rq_client.py">full source here</a>).  As with the worker, it needs to be able to connect to the Redis host.  Otherwise, jobs are queued as:</p>
+
+<pre><code>q = Queue( connection=Redis.from_url(args.redis) )
+  for infile in infiles:
+      job = q.enqueue( ma.process_file,
+                      infile,
+                      outfile,
+                      lazycache_url = args.lazycache,
+                      num_threads=args.threads,
+                      stride=args.stride,
+                      start=args.start,
+                      stop=args.stop,
+                      timeout='1024h',
+                      result_ttl = 3600*168,
+                      ttl=3600*168 )
+</code></pre>
+
+<p>Just a simple function call with arguments.   One interesting feature is that
+the function args and args to RQ are mixed.  In this case, <code>timeout</code>, <code>result_ttl</code>
+and <code>ttl</code> are RQ args, and the rest are for my function <code>process_file</code>.   <code>result_ttl</code> and <code>ttl</code> control the lifespan of pending jobs and jobs results in the Redis datastore.   <code>timeout</code> sets the maximum time workers are allowed to run.</p>
+
+<p>The rest of the script is concerned with connecting to the CI, iterating through
+the available movies and seeing which have matching JSON files in the local
+repo.</p>
+
+<p>For total parity, I prefer to run the injection script inside a worker Docker image (see the <code>inject</code> task <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/deploy/Rakefile">here</a>).   This lets me use <code>.env</code> files for configuration, just as I&rsquo;m doing with the workers.</p>
+
+<p><strong>See also <a href="{{ site.baseurl }}{% post_url 2017-06-16-scaling-up-frame-analysis-part-one %}">the introductory post</a> in this series and <a href="{{ site.baseurl }}{% post_url 2017-07-05-scaling-up-frame-analysis-part-two %}">the second post</a> on making Docker images.</strong></p>
+
+      </section>
+      
+
+
+    </article>
+    <div class="ph3 mt2 mt6-ns">
+      
+
+
+
+
+
+
+
+  <div class="bg-light-gray pa3">
+    <ul>
+      <li class="list b mb3">
+        21 More Posts
+      </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-11-17-new-documentation/" class="link ph2 pv2 db black">
+            Improvements to CamHD_Motion_Metadata documentation
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-10-05-new-faster-lazycache/" class="link ph2 pv2 db black">
+            Performance improvements to Lazycache
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-09-11-publications-page/" class="link ph2 pv2 db black">
+            Publications....
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-27-using-the-regions-data/" class="link ph2 pv2 db black">
+            How to use the regions metadata
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-13-ci-stats/" class="link ph2 pv2 db black">
+            Some CI statistics
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-07-initial-performance-data/" class="link ph2 pv2 db black">
+            First performance benchmarks from scaled-out processing
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-06-scaling-up-frame-analysis-part-three/" class="link ph2 pv2 db black o-50">
+            Scaling out Image Analysis, Part Three: the Redis work queue
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-05-scaling-up-frame-analysis-part-two/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part Two:   Making the Docker Image
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-06-16-scaling-up-frame-analysis-part-one/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part One
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-15-benchmarking-pycamhd-part-two/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods (again)
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-02-benchmarking-on-google-compute-engine/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods II, Google Compute Engine
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-01-benchmarking-pycamhd/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-01-camhdhub-is-live/" class="link ph2 pv2 db black">
+            CamHD Compute Hub is Live!
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-02-14-escience-midterm/" class="link ph2 pv2 db black">
+            eScience Winter Incubator Mid-term Checkin
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-02-13-trying-out-deis-workflow/" class="link ph2 pv2 db black">
+            My Notes on Trying out Deis Workflow on Google Container Engine
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-25-deploying-to-google-cloud/" class="link ph2 pv2 db black">
+            A Brief Tour of LazyCache Part II, Deploying to Google Cloud Platform
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-24-current-status/" class="link ph2 pv2 db black">
+            A Brief Tour of LazyCache Part I, the Software
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-05-escience-incubator/" class="link ph2 pv2 db black">
+            Winter 2017 eScience Incubator
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-12-26-lazyfs-and-friends/" class="link ph2 pv2 db black">
+            LazyFS Rev 1
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-12-02-time-lapse/" class="link ph2 pv2 db black">
+            Sample Time Lapse Movies
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-11-30-thinking-aloud-about-specs/" class="link ph2 pv2 db black">
+            Thinking out loud about accessing CamHD data
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-11-01-first-post/" class="link ph2 pv2 db black">
+            Project kickoff!
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+    </div>
+  </div>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/public-www/" >
+    &copy; 2017 CamHD Video Analysis
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    <script src="https://camhd-analysis.github.io/public-www/dist/app.bundle.js" async></script>
+
+  </body>
+</html>

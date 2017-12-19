@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>CamHD Video Analysis  | Scaling out Image Analysis, Part One</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.31.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    <link href='https://camhd-analysis.github.io/public-www/dist/main.css' rel='stylesheet' type="text/css" />
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Scaling out Image Analysis, Part One" />
+<meta property="og:description" content="A core assumption of this project has always been that somehow, someday, someone would want to run an algorithm over every CamHD video in the archive. The central engineering goal has been to come up with a way to do this, and to document how it was done such that others might do the same. Once we can do this, we can scale up any sort of scientific analysis.
+I&rsquo;ve written a tool in Python / C&#43;&#43; / OpenCV, camhd_motion_analysis, which uses optical flow to estimate the camera motion." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://camhd-analysis.github.io/public-www/post/2017-06-16-scaling-up-frame-analysis-part-one/" />
+
+
+
+<meta property="article:published_time" content="2017-06-16T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-06-16T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Scaling out Image Analysis, Part One">
+<meta itemprop="description" content="A core assumption of this project has always been that somehow, someday, someone would want to run an algorithm over every CamHD video in the archive. The central engineering goal has been to come up with a way to do this, and to document how it was done such that others might do the same. Once we can do this, we can scale up any sort of scientific analysis.
+I&rsquo;ve written a tool in Python / C&#43;&#43; / OpenCV, camhd_motion_analysis, which uses optical flow to estimate the camera motion.">
+
+
+<meta itemprop="datePublished" content="2017-06-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-06-16T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="613">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Scaling out Image Analysis, Part One"/>
+<meta name="twitter:description" content="A core assumption of this project has always been that somehow, someday, someone would want to run an algorithm over every CamHD video in the archive. The central engineering goal has been to come up with a way to do this, and to document how it was done such that others might do the same. Once we can do this, we can scale up any sort of scientific analysis.
+I&rsquo;ve written a tool in Python / C&#43;&#43; / OpenCV, camhd_motion_analysis, which uses optical flow to estimate the camera motion."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://camhd-analysis.github.io/public-www/" class="f3 fw2 hover-white no-underline white-90 dib">
+      CamHD Video Analysis
+    </a>
+    <div class="flex-l items-center">
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/public-www/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <p class="f6 b helvetica tracked">
+        
+        POST
+      </p>
+      <h1 class="f1 athelas">
+        Scaling out Image Analysis, Part One
+      </h1>
+        
+        
+      <time class="f6 mv4 dib tracked" datetime="2017-06-16T00:00:00Z">
+        June 16, 2017
+      </time>
+      <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray">
+        <p>A core assumption of this project has always been that somehow, someday, someone would want to run an algorithm over every CamHD video in the archive.    The central engineering goal has been to come up with a way to do this, and to document how it was done such that others might do the same.   Once we can do this, we can scale up any sort of scientific analysis.</p>
+
+<p>I&rsquo;ve written a tool in Python / C++ / OpenCV, <a href="https://github.com/CamHD-Analysis/camhd_motion_analysis"><code>camhd_motion_analysis</code></a>, which uses optical flow to estimate the camera motion.  In its current state it requires about an hour on my desktop to process each video.  Of course, I know a bit of careful redesign might lead to huge efficiency gains, but it works now, and estimating camera motion is an essential component to finding static sections in each video.   So it&rsquo;s time to learn how to scale up&hellip;.</p>
+
+<p>With the program (a hybrid of Python and C++) in hand, I set out build a process which would let me run <code>camhd_motion_analysis</code> on many computers at once, on many videos at once.   I wanted to be able to use both the set of desktops available to me here and an ephemeral set of cloud instances on the <a href="http://cloud.google.com/">Google Cloud Platform</a>.</p>
+
+<p>Beyond that, I wanted:</p>
+
+<ul>
+<li><p>A system which was repeatable and documentable.   To me this means version-controlled scripts and configuration files which accurately record all of the steps necessary to build and run the cluster.</p></li>
+
+<li><p>To run on both a cluster of desktops and Google with minimal pain/differences between the two.</p></li>
+
+<li><p>Maximum transparency, minimum confusion</p></li>
+</ul>
+
+<p>I also recognize that while I want a robust, stable solution that doesn&rsquo;t require much babysitting, I also need to get to working relatively quickly, and long-term stability isn&rsquo;t a huge concern.   My booming dot-com isn&rsquo;t relying on the cluster being available <sup>24</sup>&frasl;<sub>7</sub>, and I&rsquo;m happy to babysit.</p>
+
+<p>I&rsquo;m pretty happy with the system described here.  Of course, there&rsquo;s still room for improvement, but it has allowed me to get to bulk processing in a relatively short timeframe (particularly including all the time waiting to see if videos are being processed correctly and all of the blind alleys).</p>
+
+<p>First, a pencil sketch:</p>
+
+<p><img src="{{site.baseurl}}/images/cluster_pencil_sketch.png" alt="Block diagram of cluster" /></p>
+
+<p>My solution is built on three components:</p>
+
+<ol>
+<li><a href="https://www.docker.com">docker</a> containers</li>
+<li><a href="https://docs.docker.com/engine/swarm/">docker swarm</a></li>
+<li><a href="http://python-rq.org">RQ</a>, a Python job-queue library which uses the <a href="https://redis.io">Redis</a> networked database</li>
+</ol>
+
+<p>My &ldquo;workers&rdquo; (the code to analyze a video) is stored in a Docker image.   Docker swarm is then used to start that image on multiple computers (my &ldquo;swarm&rdquo;), to monitor those jobs, restart them if they fail, etc.</p>
+
+<p>The individual jobs are managed by <a href="http://python-rq.org">RQ</a>.   RQ itself is pretty neat, it uses Python pickle to &ldquo;freeze dry&rdquo; an entire function call (including arguments) and store it in a Redis datastore.    The workers watch that list, pull those function calls off the stack and execute the function within.   What&rsquo;s neat about this is that the worker doesn&rsquo;t require any application specific code, it&rsquo;s basically (in pseudocode):</p>
+
+<pre><code>connect to Redis database
+while there's work to do:
+  do work
+</code></pre>
+
+<p>The python script doesn&rsquo;t need to any application-specific <code>import</code>s or etc.   <strong>However,</strong> it does need to be able to find the necessary code somewhere in the Python path.    This makes Docker-izing the analysis code essential as I can write a long and complicated Dockerfile which installs all of the dependencies for my crazy video analysis code, then rapidly push that image out to a bunch of computers in a repeatable manner.</p>
+
+<p>So, with all that said, my cluster code is on Github as <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy">camhd-motion-analysis-deploy</a>.   In later posts I&rsquo;ll walk through the steps to go from nothing to cluster.</p>
+
+<ul>
+<li><a href="{{ site.baseurl }}{% post_url 2017-07-05-scaling-up-frame-analysis-part-two %}">Post two</a> describes my Docker configuration.</li>
+<li>And <a href="{{ site.baseurl }}{% post_url  2017-07-06-scaling-up-frame-analysis-part-three %}">post three</a> discusses RQ configuration</li>
+</ul>
+
+      </section>
+      
+
+
+    </article>
+    <div class="ph3 mt2 mt6-ns">
+      
+
+
+
+
+
+
+
+  <div class="bg-light-gray pa3">
+    <ul>
+      <li class="list b mb3">
+        21 More Posts
+      </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-11-17-new-documentation/" class="link ph2 pv2 db black">
+            Improvements to CamHD_Motion_Metadata documentation
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-10-05-new-faster-lazycache/" class="link ph2 pv2 db black">
+            Performance improvements to Lazycache
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-09-11-publications-page/" class="link ph2 pv2 db black">
+            Publications....
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-27-using-the-regions-data/" class="link ph2 pv2 db black">
+            How to use the regions metadata
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-13-ci-stats/" class="link ph2 pv2 db black">
+            Some CI statistics
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-07-initial-performance-data/" class="link ph2 pv2 db black">
+            First performance benchmarks from scaled-out processing
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-06-scaling-up-frame-analysis-part-three/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part Three: the Redis work queue
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-05-scaling-up-frame-analysis-part-two/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part Two:   Making the Docker Image
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-06-16-scaling-up-frame-analysis-part-one/" class="link ph2 pv2 db black o-50">
+            Scaling out Image Analysis, Part One
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-15-benchmarking-pycamhd-part-two/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods (again)
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-02-benchmarking-on-google-compute-engine/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods II, Google Compute Engine
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-01-benchmarking-pycamhd/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-01-camhdhub-is-live/" class="link ph2 pv2 db black">
+            CamHD Compute Hub is Live!
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-02-14-escience-midterm/" class="link ph2 pv2 db black">
+            eScience Winter Incubator Mid-term Checkin
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-02-13-trying-out-deis-workflow/" class="link ph2 pv2 db black">
+            My Notes on Trying out Deis Workflow on Google Container Engine
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-25-deploying-to-google-cloud/" class="link ph2 pv2 db black">
+            A Brief Tour of LazyCache Part II, Deploying to Google Cloud Platform
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-24-current-status/" class="link ph2 pv2 db black">
+            A Brief Tour of LazyCache Part I, the Software
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-05-escience-incubator/" class="link ph2 pv2 db black">
+            Winter 2017 eScience Incubator
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-12-26-lazyfs-and-friends/" class="link ph2 pv2 db black">
+            LazyFS Rev 1
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-12-02-time-lapse/" class="link ph2 pv2 db black">
+            Sample Time Lapse Movies
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-11-30-thinking-aloud-about-specs/" class="link ph2 pv2 db black">
+            Thinking out loud about accessing CamHD data
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-11-01-first-post/" class="link ph2 pv2 db black">
+            Project kickoff!
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+    </div>
+  </div>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/public-www/" >
+    &copy; 2017 CamHD Video Analysis
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    <script src="https://camhd-analysis.github.io/public-www/dist/app.bundle.js" async></script>
+
+  </body>
+</html>

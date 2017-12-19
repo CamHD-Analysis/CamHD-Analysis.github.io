@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lazyfs Go on CamHD Video Analysis</title>
+    <link>https://camhd-analysis.github.io/public-www/categories/lazyfs-go/</link>
+    <description>Recent content in Lazyfs Go on CamHD Video Analysis</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://camhd-analysis.github.io/public-www/categories/lazyfs-go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LazyFS Rev 1</title>
+      <link>https://camhd-analysis.github.io/public-www/post/2016-12-26-lazyfs-and-friends/</link>
+      <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/public-www/post/2016-12-26-lazyfs-and-friends/</guid>
+      <description>I found myself with lots of time to think and very little time to program in December. This was good as I think my understanding of the CamHD problem evolved over that time, but I wasn&amp;rsquo;t able to really start sketching out ideas.
+I realized one of my mental blocks was choice of languages. Tim works in Python. I don&amp;rsquo;t know Python (at least not well enough to really do a good job starting from scratch), preferring Ruby for my scripting needs and C/C++ for compiled languages.</description>
+    </item>
+    
+  </channel>
+</rss>

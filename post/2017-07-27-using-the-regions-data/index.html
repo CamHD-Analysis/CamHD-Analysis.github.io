@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>CamHD Video Analysis  | How to use the regions metadata</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.31.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    <link href='https://camhd-analysis.github.io/public-www/dist/main.css' rel='stylesheet' type="text/css" />
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="How to use the regions metadata" />
+<meta property="og:description" content="This is a blog post I&rsquo;ve been looking forward to for a long time. We haven&rsquo;t processed and QC&rsquo;ed all of the data, but we are starting to make data products for public consumption.
+Along the way, I&rsquo;ve needed to grapple with some new questions:
+ Where do I store the public metadata so it will be persistently accessible? How to I publicize the data, make it trackable and citeable?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://camhd-analysis.github.io/public-www/post/2017-07-27-using-the-regions-data/" />
+
+
+
+<meta property="article:published_time" content="2017-07-27T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-07-27T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="How to use the regions metadata">
+<meta itemprop="description" content="This is a blog post I&rsquo;ve been looking forward to for a long time. We haven&rsquo;t processed and QC&rsquo;ed all of the data, but we are starting to make data products for public consumption.
+Along the way, I&rsquo;ve needed to grapple with some new questions:
+ Where do I store the public metadata so it will be persistently accessible? How to I publicize the data, make it trackable and citeable?">
+
+
+<meta itemprop="datePublished" content="2017-07-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-07-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="848">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="How to use the regions metadata"/>
+<meta name="twitter:description" content="This is a blog post I&rsquo;ve been looking forward to for a long time. We haven&rsquo;t processed and QC&rsquo;ed all of the data, but we are starting to make data products for public consumption.
+Along the way, I&rsquo;ve needed to grapple with some new questions:
+ Where do I store the public metadata so it will be persistently accessible? How to I publicize the data, make it trackable and citeable?"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://camhd-analysis.github.io/public-www/" class="f3 fw2 hover-white no-underline white-90 dib">
+      CamHD Video Analysis
+    </a>
+    <div class="flex-l items-center">
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/public-www/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <p class="f6 b helvetica tracked">
+        
+        POST
+      </p>
+      <h1 class="f1 athelas">
+        How to use the regions metadata
+      </h1>
+        
+        
+      <time class="f6 mv4 dib tracked" datetime="2017-07-27T00:00:00Z">
+        July 27, 2017
+      </time>
+      <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray">
+        
+
+<p>This is a blog post I&rsquo;ve been looking forward to for a long time.   We haven&rsquo;t processed and QC&rsquo;ed all of the data, but we are starting to make data products for public consumption.</p>
+
+<p>Along the way, I&rsquo;ve needed to grapple with some new questions:</p>
+
+<ul>
+<li>Where do I store the public metadata so it will be persistently accessible?</li>
+<li>How to I publicize the data, make it trackable and citeable?</li>
+<li>What format should the data be in?   How will end users interact with the data?</li>
+</ul>
+
+<p>This blog post describes my answers to these questions.   It is absolutely a conversation in progress, I&rsquo;m happy to hear feedback.</p>
+
+<h1 id="what-is-the-data">What is the Data</h1>
+
+<p>Our contribution to this project is metadata / annotation which accompanies and enhances the <a href="http://oceanobservatories.org/instrument-class/camhd/">CamHD</a> video stored at the OOI <a href="https://rawdata.oceanobservatories.org/files/RS03ASHS/PN03B/06-CAMHDA301/">Raw Data Archive</a>.</p>
+
+<p>The primary data product is:</p>
+
+<blockquote>
+<p>For every video, estimate the time periods (given as frames within the video) where the camera is still.   When possible, these static periods are tagged relative to a <a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata/blob/master/docs/Regions.md">pre-defined set of camera stations</a>, allowing extraction of frames showing the same field of view from multiple videos.</p>
+</blockquote>
+
+<p>Secondary data products include:</p>
+
+<blockquote>
+<p>Enumerations of metadata about all videos:   size in bytes, length in seconds, length in frames.</p>
+
+<p>A record of estimated camera motion for every N&rsquo;th frame in a video, as estimated by optical flow.</p>
+</blockquote>
+
+<h1 id="doi-and-tracking">DOI and tracking</h1>
+
+<p>The data has a DOI provided by Zenodo:   <a href="https://zenodo.org/record/834741#.WXpJrMbGxE4">10.5281/zenodo.834740</a></p>
+
+<p>This is the <strong>concept DOI</strong>, it describes the data set.  I am not too worried about release-based DOIs, I would prefer Git commits were used when fine-grain versioning information is needed.</p>
+
+<p>By Zenodo, then, the Bibtex is:</p>
+
+<pre><code>@misc{aaron_marburg_2017_834741,
+  author       = {Aaron Marburg and
+                  Timothy J Crone and
+                  Friedrich Knuth},
+  title        = { {CamHD-Analysis/CamHD_motion_metadata} },
+  month        = jul,
+  year         = 2017,
+  doi          = {10.5281/zenodo.834741},
+  url          = {https://doi.org/10.5281/zenodo.834741}
+}
+</code></pre>
+
+<p>At present, the data is under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-4.0</a> license, which I consider to be pretty standard academic-ish license.   The data is publicly available as a service from us (not from the NSF, OCL, OOI, or the CI), I accept no liability, and if you use data, please cite us.</p>
+
+<h1 id="json-on-github">JSON on Github</h1>
+
+<p>The mothership for all data is <a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata">on Github</a>,
+and the canonical form of the data is as JSON.</p>
+
+<p><img src="{{site.baseurl}}/images/CamHD_motion_metadata_github_screenshot.jpg" alt="" /></p>
+
+<p>The types and formats of JSON data are described in the repo.   The full data set is biggish for Github (~13GB) but using Github solves the hosting, version control, and issue tracking all in one fell swoop.  The JSON files are <em>independent</em> and you only need to download the files for the video files you&rsquo;re working with &hellip;. <em>or</em> you could clone the repo to get all of the files.</p>
+
+<p>I have written a Python library, <a href="https://github.com/CamHD-Analysis/pycamhd-motion-metadata">pycamhd-motion-metadata</a>, which provides
+convenience wrappers around the common JSON formats.   It <em>does not</em> handle downloading the data, it assumes you have a local copy of the Git repo &hellip;. or at least the JSON files you&rsquo;re interested in.    It contains a number (well, ok, just one) of <a href="https://github.com/CamHD-Analysis/pycamhd-motion-metadata/tree/master/examples">examples</a> on its use &hellip; many of these also depend on <a href="https://github.com/CamHD-Analysis/pycamhd-lazycache">pycamhd-lazycache</a>.</p>
+
+<h1 id="csv">CSV</h1>
+
+<p>The static regions data in JSON format is also <a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata/blob/master/scripts/regions_to_csv.py">converted</a> to a tabular format.   A copy is stored in the git repo as <a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata/tree/master/datapackage"><code>datapackage/regions.csv</code></a>.</p>
+
+<p>The contents of the CSV file are:</p>
+
+<pre><code>mov_basename,date_time,start_frame,end_frame,scene_tag
+CAMHDA301-20160101T000000Z,2016-01-01T00:00:00,581,1051,d2_p1_z0
+CAMHDA301-20160101T000000Z,2016-01-01T00:00:00,1221,1351,d2_p1_z1
+CAMHDA301-20160101T000000Z,2016-01-01T00:00:00,1711,2191,d2_p0_z0
+...
+...
+</code></pre>
+
+<p>The first line contains a descriptive header.   These are the current columns (subject to change):</p>
+
+<ul>
+<li><code>mov_basename</code>:  The filename for the movie without an extension.</li>
+<li><code>date_time</code>: The date/time in UTC for the movie <strong>translated from the movie filename</strong> to ISO format.   To reiterate:  <strong>this is the date time from the filename, it doesn&rsquo;t have anything to do with the real world time when the video starts, stops, etc</strong>.</li>
+<li><code>start_frame</code>:   The first frame in this static region.<br /></li>
+<li><code>end_frame</code>:  The last frame in this static region.</li>
+<li><code>scene_tag</code>:   The label applied to this region, may be <code>unknown</code> is the classifier was unable to label a scene, or blank if a region hasn&rsquo;t been classifiy.</li>
+</ul>
+
+<p>Accompanying the CSV is a <code>datapackage.json</code> which complies with the <a href="http://frictionlessdata.io">frictionless datapackage</a> metadata standard.  This means their <a href="http://frictionlessdata.io/tools/">standard tools</a> can be used to access the data:</p>
+
+<pre><code>import datapackage
+url = &quot;https://raw.githubusercontent.com/CamHD-Analysis/CamHD_motion_metadata/master/datapackage/datapackage.json&quot;
+
+dp = datapackage.DataPackage(url)
+print(dp.descriptor['title'])
+
+regions = dp.resources[0]
+
+d2_p2_z0 = [r for r in regions.iter() if r['scene_tag'] == 'd2_p2_z0']
+
+print(&quot;%d regions&quot; % len(d2_p2_z0))
+</code></pre>
+
+<p>Other demos are in the <a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata/tree/master/datapackage/examples"><code>datapackage/examples/</code></a> directory.</p>
+
+<h1 id="bigquery">BigQuery</h1>
+
+<p>As a test, I have also uploaded the data to the <a href="https://bigquery.cloud.google.com/table/camhd-motion-metadata:camhd.movie_metadata">Google BigQuery</a> hosted database service.  Standard BQ tools can be used to make queries.   For example, using the <code>bq</code> command line:</p>
+
+<pre><code>    &gt; bq query --project_id camhd-motion-metadata &quot;SELECT mov_basename,start_frame,end_frame FROM camhd.regiosn WHERE scene_tag='d2_p0_z0' ORDER BY date_time LIMIT 6&quot;
+
+    Waiting on bqjob_r288eb1c9d004d4d9_0000015d85d0013d_1 ... (0s) Current status: DONE
+    +----------------------------+-------------+-----------+
+    |        mov_basename        | start_frame | end_frame |
+    +----------------------------+-------------+-----------+
+    | CAMHDA301-20160101T000000Z |        1711 |      2191 |
+    | CAMHDA301-20160101T000000Z |       13101 |     13381 |
+    | CAMHDA301-20160101T000000Z |        7531 |      7811 |
+    | CAMHDA301-20160101T000000Z |        4691 |      4961 |
+    | CAMHDA301-20160101T000000Z |       23601 |     23931 |
+    | CAMHDA301-20160101T000000Z |       21031 |     21351 |
+    +----------------------------+-------------+-----------+
+</code></pre>
+
+<p>This isn&rsquo;t unique as far as hosted databases go, but provides an interesting starting point.  I haven&rsquo;t learned any BQ language libraries yet, that&rsquo;s the next step</p>
+
+      </section>
+      
+
+
+    </article>
+    <div class="ph3 mt2 mt6-ns">
+      
+
+
+
+
+
+
+
+  <div class="bg-light-gray pa3">
+    <ul>
+      <li class="list b mb3">
+        21 More Posts
+      </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-11-17-new-documentation/" class="link ph2 pv2 db black">
+            Improvements to CamHD_Motion_Metadata documentation
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-10-05-new-faster-lazycache/" class="link ph2 pv2 db black">
+            Performance improvements to Lazycache
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-09-11-publications-page/" class="link ph2 pv2 db black">
+            Publications....
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-27-using-the-regions-data/" class="link ph2 pv2 db black o-50">
+            How to use the regions metadata
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-13-ci-stats/" class="link ph2 pv2 db black">
+            Some CI statistics
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-07-initial-performance-data/" class="link ph2 pv2 db black">
+            First performance benchmarks from scaled-out processing
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-06-scaling-up-frame-analysis-part-three/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part Three: the Redis work queue
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-07-05-scaling-up-frame-analysis-part-two/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part Two:   Making the Docker Image
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-06-16-scaling-up-frame-analysis-part-one/" class="link ph2 pv2 db black">
+            Scaling out Image Analysis, Part One
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-15-benchmarking-pycamhd-part-two/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods (again)
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-02-benchmarking-on-google-compute-engine/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods II, Google Compute Engine
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-01-benchmarking-pycamhd/" class="link ph2 pv2 db black">
+            Benchmarking Frame Access Methods
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-05-01-camhdhub-is-live/" class="link ph2 pv2 db black">
+            CamHD Compute Hub is Live!
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-02-14-escience-midterm/" class="link ph2 pv2 db black">
+            eScience Winter Incubator Mid-term Checkin
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-02-13-trying-out-deis-workflow/" class="link ph2 pv2 db black">
+            My Notes on Trying out Deis Workflow on Google Container Engine
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-25-deploying-to-google-cloud/" class="link ph2 pv2 db black">
+            A Brief Tour of LazyCache Part II, Deploying to Google Cloud Platform
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-24-current-status/" class="link ph2 pv2 db black">
+            A Brief Tour of LazyCache Part I, the Software
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2017-01-05-escience-incubator/" class="link ph2 pv2 db black">
+            Winter 2017 eScience Incubator
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-12-26-lazyfs-and-friends/" class="link ph2 pv2 db black">
+            LazyFS Rev 1
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-12-02-time-lapse/" class="link ph2 pv2 db black">
+            Sample Time Lapse Movies
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-11-30-thinking-aloud-about-specs/" class="link ph2 pv2 db black">
+            Thinking out loud about accessing CamHD data
+          </a>
+        </li>
+      
+        <li class="list f5 w-100 hover-bg-white nl1">
+          
+          <a href="/public-www/post/2016-11-01-first-post/" class="link ph2 pv2 db black">
+            Project kickoff!
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+    </div>
+  </div>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/public-www/" >
+    &copy; 2017 CamHD Video Analysis
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    <script src="https://camhd-analysis.github.io/public-www/dist/app.bundle.js" async></script>
+
+  </body>
+</html>
