@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Escience Lazycache Gcp on CamHD Video Analysis</title>
-    <link>https://www.camhd.science/categories/escience-lazycache-gcp/</link>
+    <link>https://camhd-analysis.github.io/categories/escience-lazycache-gcp/</link>
     <description>Recent content in Escience Lazycache Gcp on CamHD Video Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 13 Feb 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://www.camhd.science/categories/escience-lazycache-gcp/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://camhd-analysis.github.io/categories/escience-lazycache-gcp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My Notes on Trying out Deis Workflow on Google Container Engine</title>
-      <link>https://www.camhd.science/post/2017-02-13-trying-out-deis-workflow/</link>
+      <link>https://camhd-analysis.github.io/post/2017-02-13-trying-out-deis-workflow/</link>
       <pubDate>Mon, 13 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.camhd.science/post/2017-02-13-trying-out-deis-workflow/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-02-13-trying-out-deis-workflow/</guid>
       <description>Over the last couple of weeks I&amp;rsquo;ve been exploring the range of offerings from Google Cloud Platform. I started out working with base Google Compute Engine (GCE) virtual instances, as it&amp;rsquo;s the &amp;ldquo;ground floor&amp;rdquo; on the technology pyramid and seemed like a good place to start. With Docker as a common platform, it&amp;rsquo;s pretty straightforward to spin up single GCE instances which automatically load and run a Docker image.</description>
     </item>
     
     <item>
       <title>A Brief Tour of LazyCache Part II, Deploying to Google Cloud Platform</title>
-      <link>https://www.camhd.science/post/2017-01-25-deploying-to-google-cloud/</link>
+      <link>https://camhd-analysis.github.io/post/2017-01-25-deploying-to-google-cloud/</link>
       <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.camhd.science/post/2017-01-25-deploying-to-google-cloud/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-01-25-deploying-to-google-cloud/</guid>
       <description>UPDATE Feb 14 2017: For a bunch of reasons (mostly having to do with triggering CI builds), I decided lazycache-deploy didn&amp;rsquo;t need to be its own repo. It&amp;rsquo;s now a sub-directory of https://github.com/amarburg/go-lazycache-app. I&amp;rsquo;ve done an imperfect modification of the text below&amp;hellip;
 For totally arbitrary, er, I mean perfectly reasonable reasons, I&amp;rsquo;ve decided to target Google Cloud Platform as my strawman &amp;ldquo;commercial cloud&amp;rdquo; provider. I still believe there&amp;rsquo;s a use case for deploying the software &amp;mdash; or some subset of it &amp;mdash; on a local or lab machine, but it certainly makes a lot of sense to have the server capable of running in the cloud, whether it&amp;rsquo;s public or strictly private to service a set of local compute instances, so this seemed like a good place to start.</description>
     </item>

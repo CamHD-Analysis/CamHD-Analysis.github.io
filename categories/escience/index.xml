@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Escience on CamHD Video Analysis</title>
-    <link>https://www.camhd.science/categories/escience/</link>
+    <link>https://camhd-analysis.github.io/categories/escience/</link>
     <description>Recent content in Escience on CamHD Video Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 14 Feb 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://www.camhd.science/categories/escience/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://camhd-analysis.github.io/categories/escience/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>eScience Winter Incubator Mid-term Checkin</title>
-      <link>https://www.camhd.science/post/2017-02-14-escience-midterm/</link>
+      <link>https://camhd-analysis.github.io/post/2017-02-14-escience-midterm/</link>
       <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.camhd.science/post/2017-02-14-escience-midterm/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-02-14-escience-midterm/</guid>
       <description>Just finished my eScience Winter Incubator mid-term checkin. It was great to hear what everyone else is up to.
 I&amp;rsquo;ve attached my slides below (FWIW), and see Nick&amp;rsquo;s notes.
 {:center}</description>
@@ -24,10 +24,10 @@ I&amp;rsquo;ve attached my slides below (FWIW), and see Nick&amp;rsquo;s notes.
     
     <item>
       <title>Winter 2017 eScience Incubator</title>
-      <link>https://www.camhd.science/post/2017-01-05-escience-incubator/</link>
+      <link>https://camhd-analysis.github.io/post/2017-01-05-escience-incubator/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.camhd.science/post/2017-01-05-escience-incubator/</guid>
+      <guid>https://camhd-analysis.github.io/post/2017-01-05-escience-incubator/</guid>
       <description>My (Aaron&amp;rsquo;s) contribution to this project has been accepted for the 2017 UW eScience Institute Winter 2017 Incubator. It&amp;rsquo;s the first day in the office for this ten week program and I&amp;rsquo;m meeting the other participants.
 Besides the technical support from the eScience analysts on image processing, data handling and cloud compute, I&amp;rsquo;m really looking forward to being forced to explain and justify my design decision in detail. Working by myself, I miss the opportunity for design review.</description>
     </item>
