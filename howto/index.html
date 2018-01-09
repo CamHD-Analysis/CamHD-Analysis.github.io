@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>CamHD Video Analysis  | Lazycache Gcp</title>
+    <title>CamHD Video Analysis </title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -21,18 +21,14 @@
     
 
     
-      <link href="https://www.camhd.science/categories/lazycache-gcp/index.xml" rel="alternate" type="application/rss+xml" title="CamHD Video Analysis" />
-      <link href="https://www.camhd.science/categories/lazycache-gcp/index.xml" rel="feed" type="application/rss+xml" title="CamHD Video Analysis" />
+      <link href="https://www.camhd.science/howto/index.xml" rel="alternate" type="application/rss+xml" title="CamHD Video Analysis" />
+      <link href="https://www.camhd.science/howto/index.xml" rel="feed" type="application/rss+xml" title="CamHD Video Analysis" />
     
 
-    <meta property="og:title" content="Lazycache Gcp" />
+    <meta property="og:title" content="" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.camhd.science/categories/lazycache-gcp/" />
-
-
-
-<meta property="og:updated_time" content="2017-06-16T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://www.camhd.science/howto/" />
 
 
 
@@ -43,10 +39,14 @@
 
 
 
-<meta itemprop="name" content="Lazycache Gcp">
+
+
+
+
+<meta itemprop="name" content="">
 <meta itemprop="description" content="">
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Lazycache Gcp"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content=""/>
 <meta name="twitter:description" content=""/>
 
   </head>
@@ -97,7 +97,7 @@
 
       <div class="tc-l pv4 pv6-l ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          Lazycache Gcp
+          CamHD Video Analysis
         </h1>
         
       </div>
@@ -108,8 +108,8 @@
     <main class="pb7" role="main">
       
   <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “Lazycache Gcp”</p>
+    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">                
+      
     </div>
   </article>
   <div class="mw8 center">
@@ -119,15 +119,17 @@
         <div class="relative w-100  mb4 bg-white">
           <div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Post</span>
+    <span class="f6 db">Howto</span>
     <h1 class="f3 near-black">
-      <a href="/post/2017-06-16-scaling-up-frame-analysis-part-one/" class="link black dim">
-        Scaling out Image Analysis, Part One
+      <a href="/howto/running-local-lazycache/" class="link black dim">
+        Running a local copy of lazycache
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A core assumption of this project has always been that somehow, someday, someone would want to run an algorithm over every CamHD video in the archive. The central engineering goal has been to come up with a way to do this, and to document how it was done such that others might do the same. Once we can do this, we can scale up any sort of scientific analysis.
-I&rsquo;ve written a tool in Python / C++ / OpenCV, camhd_motion_analysis, which uses optical flow to estimate the camera motion.
+      In most cases, if you&rsquo;re making heavy use of Lazycache, it makes sense to run a local copy. Lazycache is packaged as a Docker image. Assuming you have Docker installed, you can run a local copy from the command line as:
+docker run --rm -p 8080:8080 amarburg/camhd_cache:latest  This will expose your local copy at port 8080.
+You can then pass this local URL to the pycamhd-lazycache Python module:
+import pycamhd.
     </div>
   </div>
 </div>
@@ -135,6 +137,8 @@ I&rsquo;ve written a tool in Python / C++ / OpenCV, camhd_motion_analysis, which
         </div>
       
     </section>
+  
+
   </div>
 
     </main>

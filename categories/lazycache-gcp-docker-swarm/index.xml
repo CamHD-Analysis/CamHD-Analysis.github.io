@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Lazycache Gcp Docker Swarm on CamHD Video Analysis</title>
-    <link>https://camhd-analysis.github.io/categories/lazycache-gcp-docker-swarm/</link>
+    <link>https://www.camhd.science/categories/lazycache-gcp-docker-swarm/</link>
     <description>Recent content in Lazycache Gcp Docker Swarm on CamHD Video Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 07 Jul 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://camhd-analysis.github.io/categories/lazycache-gcp-docker-swarm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.camhd.science/categories/lazycache-gcp-docker-swarm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>First performance benchmarks from scaled-out processing</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-07-initial-performance-data/</link>
+      <link>https://www.camhd.science/post/2017-07-07-initial-performance-data/</link>
       <pubDate>Fri, 07 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-07-initial-performance-data/</guid>
+      <guid>https://www.camhd.science/post/2017-07-07-initial-performance-data/</guid>
       <description>While I&amp;rsquo;ve been working away on documentation on my scaled-out image analysis procedure, my swarms have been humming away in the background, working through the CamHD archive. As of today (July 7 2017), I&amp;rsquo;ve done optical flow processing on the bulk of 2016, with 2017 in the queue. The region analysis still requires careful quality control, so I haven&amp;rsquo;t started it yet. But it requires far less processing time.
 Before I start throwing out numbers, let me briefly outline how the processing works.</description>
     </item>
     
     <item>
       <title>Scaling out Image Analysis, Part Three: the Redis work queue</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-06-scaling-up-frame-analysis-part-three/</link>
+      <link>https://www.camhd.science/post/2017-07-06-scaling-up-frame-analysis-part-three/</link>
       <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-06-scaling-up-frame-analysis-part-three/</guid>
+      <guid>https://www.camhd.science/post/2017-07-06-scaling-up-frame-analysis-part-three/</guid>
       <description>My image analysis tools are trivially parallelizable. That is, I have a worker which requires a reasonable block of time (an hour or two) to process one video. I can process many videos by running this worker on a bunch of computers, and have them slowly chug through all of the videos on the CI, one at a time.
 To control this mayhem, I&amp;rsquo;m using a work queue system built around the RQ library for Python.</description>
     </item>

@@ -2,50 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CamHD Video Analysis</title>
-    <link>https://camhd-analysis.github.io/</link>
+    <link>https://www.camhd.science/</link>
     <description>Recent content on CamHD Video Analysis</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 17 Nov 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://camhd-analysis.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.camhd.science/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Improvements to CamHD_Motion_Metadata documentation</title>
-      <link>https://camhd-analysis.github.io/post/2017-11-17-new-documentation/</link>
+      <link>https://www.camhd.science/post/2017-11-17-new-documentation/</link>
       <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-11-17-new-documentation/</guid>
+      <guid>https://www.camhd.science/post/2017-11-17-new-documentation/</guid>
       <description>I&amp;rsquo;ve recently hired a couple of UW Masters of Data Science students to help me clean up the code. Nothing like a fresh set of eyes to find all of the crazy idiosyncracies I&amp;rsquo;ve introduced to the process.
 As part of that, I&amp;rsquo;ve been trying to clean up the documentation in CamHD_motion_metadata including a new description of the full processing chain.</description>
     </item>
     
     <item>
       <title>Performance improvements to Lazycache</title>
-      <link>https://camhd-analysis.github.io/post/2017-10-05-new-faster-lazycache/</link>
+      <link>https://www.camhd.science/post/2017-10-05-new-faster-lazycache/</link>
       <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-10-05-new-faster-lazycache/</guid>
+      <guid>https://www.camhd.science/post/2017-10-05-new-faster-lazycache/</guid>
       <description>I&amp;rsquo;ve completed a round of profiling in Lazycache and implemented a few new features which greatly speed up image retrieval in a couple of important cases:
  Lazycache now takes the argument --file-overlay, which specifies a local (on the web server) location containing CAMHD files. These files will be used preferentially over contacting Rutgers directly. By default, it expects to have the same directory hierarchy as Rutgers (/RS03ASHS/PN03B/06-CAMHDA301/...). If the option --file-overlay-flatten is specified, it assumes the *.</description>
     </item>
     
     <item>
       <title>Publications....</title>
-      <link>https://camhd-analysis.github.io/post/2017-09-11-publications-page/</link>
+      <link>https://www.camhd.science/post/2017-09-11-publications-page/</link>
       <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-09-11-publications-page/</guid>
+      <guid>https://www.camhd.science/post/2017-09-11-publications-page/</guid>
       <description>I&amp;rsquo;ve started a publications page for listing outputs from this project.</description>
     </item>
     
     <item>
       <title>How to use the regions metadata</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-27-using-the-regions-data/</link>
+      <link>https://www.camhd.science/post/2017-07-27-using-the-regions-data/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-27-using-the-regions-data/</guid>
+      <guid>https://www.camhd.science/post/2017-07-27-using-the-regions-data/</guid>
       <description>This is a blog post I&amp;rsquo;ve been looking forward to for a long time. We haven&amp;rsquo;t processed and QC&amp;rsquo;ed all of the data, but we are starting to make data products for public consumption.
 Along the way, I&amp;rsquo;ve needed to grapple with some new questions:
  Where do I store the public metadata so it will be persistently accessible? How to I publicize the data, make it trackable and citeable?</description>
@@ -53,10 +53,10 @@ Along the way, I&amp;rsquo;ve needed to grapple with some new questions:
     
     <item>
       <title>Some CI statistics</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-13-ci-stats/</link>
+      <link>https://www.camhd.science/post/2017-07-13-ci-stats/</link>
       <pubDate>Thu, 13 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-13-ci-stats/</guid>
+      <guid>https://www.camhd.science/post/2017-07-13-ci-stats/</guid>
       <description>As of today, the CI contains:
 89310821054300 bytes 85173436.216640 MB 83177.183805 GB 81.227719 TB 5330861.919225 seconds 159766016 frames 6682 files  of CamHD ProRes, not counting the 21 I can&amp;rsquo;t parse.
 Stats generated with this script.</description>
@@ -64,69 +64,69 @@ Stats generated with this script.</description>
     
     <item>
       <title>First performance benchmarks from scaled-out processing</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-07-initial-performance-data/</link>
+      <link>https://www.camhd.science/post/2017-07-07-initial-performance-data/</link>
       <pubDate>Fri, 07 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-07-initial-performance-data/</guid>
+      <guid>https://www.camhd.science/post/2017-07-07-initial-performance-data/</guid>
       <description>While I&amp;rsquo;ve been working away on documentation on my scaled-out image analysis procedure, my swarms have been humming away in the background, working through the CamHD archive. As of today (July 7 2017), I&amp;rsquo;ve done optical flow processing on the bulk of 2016, with 2017 in the queue. The region analysis still requires careful quality control, so I haven&amp;rsquo;t started it yet. But it requires far less processing time.
 Before I start throwing out numbers, let me briefly outline how the processing works.</description>
     </item>
     
     <item>
       <title>Scaling out Image Analysis, Part Three: the Redis work queue</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-06-scaling-up-frame-analysis-part-three/</link>
+      <link>https://www.camhd.science/post/2017-07-06-scaling-up-frame-analysis-part-three/</link>
       <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-06-scaling-up-frame-analysis-part-three/</guid>
+      <guid>https://www.camhd.science/post/2017-07-06-scaling-up-frame-analysis-part-three/</guid>
       <description>My image analysis tools are trivially parallelizable. That is, I have a worker which requires a reasonable block of time (an hour or two) to process one video. I can process many videos by running this worker on a bunch of computers, and have them slowly chug through all of the videos on the CI, one at a time.
 To control this mayhem, I&amp;rsquo;m using a work queue system built around the RQ library for Python.</description>
     </item>
     
     <item>
       <title>Scaling out Image Analysis, Part Two:   Making the Docker Image</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-05-scaling-up-frame-analysis-part-two/</link>
+      <link>https://www.camhd.science/post/2017-07-05-scaling-up-frame-analysis-part-two/</link>
       <pubDate>Wed, 05 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-07-05-scaling-up-frame-analysis-part-two/</guid>
+      <guid>https://www.camhd.science/post/2017-07-05-scaling-up-frame-analysis-part-two/</guid>
       <description>Docker containers are an essential component of my scaled analysis. They bring two big benefits to the table: First, I can use it as a kind of heavy-weight package management system, allowing me to wrap up my software and all its messy dependencies into a monolithic image, and easily publish that image to a central repository, knowing that all of the dependency wierdness will be (mostly) ironed out. Second, it lets me separate worker units from hardware units.</description>
     </item>
     
     <item>
       <title>Scaling out Image Analysis, Part One</title>
-      <link>https://camhd-analysis.github.io/post/2017-06-16-scaling-up-frame-analysis-part-one/</link>
+      <link>https://www.camhd.science/post/2017-06-16-scaling-up-frame-analysis-part-one/</link>
       <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-06-16-scaling-up-frame-analysis-part-one/</guid>
+      <guid>https://www.camhd.science/post/2017-06-16-scaling-up-frame-analysis-part-one/</guid>
       <description>A core assumption of this project has always been that somehow, someday, someone would want to run an algorithm over every CamHD video in the archive. The central engineering goal has been to come up with a way to do this, and to document how it was done such that others might do the same. Once we can do this, we can scale up any sort of scientific analysis.
 I&amp;rsquo;ve written a tool in Python / C++ / OpenCV, camhd_motion_analysis, which uses optical flow to estimate the camera motion.</description>
     </item>
     
     <item>
       <title>Benchmarking Frame Access Methods (again)</title>
-      <link>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</link>
+      <link>https://www.camhd.science/post/2017-05-15-benchmarking-pycamhd-part-two/</link>
       <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</guid>
+      <guid>https://www.camhd.science/post/2017-05-15-benchmarking-pycamhd-part-two/</guid>
       <description>I&amp;rsquo;ve made an effort to cleanup and regularize my benchmarking code, and have tested it on my desktop here (in Seattle), on the CamHD Compute Engine and on Google Cloud instances.
 As detailed previously, we&amp;rsquo;re exploring a few different methods for efficiently extracting individual frames from CamHD movies. Tim&amp;rsquo;s pycamhd module does this extraction in native Python (with help from FFMpeg). My lazycache tool is designed to run as a service with an HTTP API, although coincidentally I&amp;rsquo;ve also developed a Python wrapper around the core Go-based frame extraction code.</description>
     </item>
     
     <item>
       <title>Benchmarking Frame Access Methods II, Google Compute Engine</title>
-      <link>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</link>
+      <link>https://www.camhd.science/post/2017-05-02-benchmarking-on-google-compute-engine/</link>
       <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</guid>
+      <guid>https://www.camhd.science/post/2017-05-02-benchmarking-on-google-compute-engine/</guid>
       <description>Following on the first round of benchmarking, I repeated the Lazycache-oriented portion of the benchmarks from a Google Compute Engine instance.
 To do this I started a GCE instance in the same zone (but in a different project) as my Google App Engine Lazycache instance. I used a n1-highcpu-4 (4 vCPUs, 3.6 GB memory) running Ubuntu 16.04LTS. Once the machine was provisioned I installed Miniconda manually, and then Jupyter notebook and all of the dependencies.</description>
     </item>
     
     <item>
       <title>Benchmarking Frame Access Methods</title>
-      <link>https://camhd-analysis.github.io/post/2017-05-01-benchmarking-pycamhd/</link>
+      <link>https://www.camhd.science/post/2017-05-01-benchmarking-pycamhd/</link>
       <pubDate>Mon, 01 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-05-01-benchmarking-pycamhd/</guid>
+      <guid>https://www.camhd.science/post/2017-05-01-benchmarking-pycamhd/</guid>
       <description>Tim and I (Aaron) have been exploring different strategies for making the CamHD video more accessible. Following our own paths, we&amp;rsquo;ve come up with two closely related, yet subtly different tools for pulling individual frames from the HD Quicktime/ProRes files.
 There are two big families of tools:
 Tim has developed PyCamHD, a Python library which can efficiently extract single frames from a Quicktime file.
@@ -135,20 +135,20 @@ My tools are &amp;hellip; a little more complicated.</description>
     
     <item>
       <title>CamHD Compute Hub is Live!</title>
-      <link>https://camhd-analysis.github.io/post/2017-05-01-camhdhub-is-live/</link>
+      <link>https://www.camhd.science/post/2017-05-01-camhdhub-is-live/</link>
       <pubDate>Mon, 01 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-05-01-camhdhub-is-live/</guid>
+      <guid>https://www.camhd.science/post/2017-05-01-camhdhub-is-live/</guid>
       <description>As part of our mission to provide tools for processing CamHD video data, we&amp;rsquo;ve established a JupyterHub instance which has a local copy of a subset of the full HD (uncompressed ProRes) CamHD video.
 Please see the landing page HERE.</description>
     </item>
     
     <item>
       <title>eScience Winter Incubator Mid-term Checkin</title>
-      <link>https://camhd-analysis.github.io/post/2017-02-14-escience-midterm/</link>
+      <link>https://www.camhd.science/post/2017-02-14-escience-midterm/</link>
       <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-02-14-escience-midterm/</guid>
+      <guid>https://www.camhd.science/post/2017-02-14-escience-midterm/</guid>
       <description>Just finished my eScience Winter Incubator mid-term checkin. It was great to hear what everyone else is up to.
 I&amp;rsquo;ve attached my slides below (FWIW), and see Nick&amp;rsquo;s notes.
 {:center}</description>
@@ -156,59 +156,59 @@ I&amp;rsquo;ve attached my slides below (FWIW), and see Nick&amp;rsquo;s notes.
     
     <item>
       <title>My Notes on Trying out Deis Workflow on Google Container Engine</title>
-      <link>https://camhd-analysis.github.io/post/2017-02-13-trying-out-deis-workflow/</link>
+      <link>https://www.camhd.science/post/2017-02-13-trying-out-deis-workflow/</link>
       <pubDate>Mon, 13 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-02-13-trying-out-deis-workflow/</guid>
+      <guid>https://www.camhd.science/post/2017-02-13-trying-out-deis-workflow/</guid>
       <description>Over the last couple of weeks I&amp;rsquo;ve been exploring the range of offerings from Google Cloud Platform. I started out working with base Google Compute Engine (GCE) virtual instances, as it&amp;rsquo;s the &amp;ldquo;ground floor&amp;rdquo; on the technology pyramid and seemed like a good place to start. With Docker as a common platform, it&amp;rsquo;s pretty straightforward to spin up single GCE instances which automatically load and run a Docker image.</description>
     </item>
     
     <item>
       <title>A Brief Tour of LazyCache Part II, Deploying to Google Cloud Platform</title>
-      <link>https://camhd-analysis.github.io/post/2017-01-25-deploying-to-google-cloud/</link>
+      <link>https://www.camhd.science/post/2017-01-25-deploying-to-google-cloud/</link>
       <pubDate>Wed, 25 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-01-25-deploying-to-google-cloud/</guid>
+      <guid>https://www.camhd.science/post/2017-01-25-deploying-to-google-cloud/</guid>
       <description>UPDATE Feb 14 2017: For a bunch of reasons (mostly having to do with triggering CI builds), I decided lazycache-deploy didn&amp;rsquo;t need to be its own repo. It&amp;rsquo;s now a sub-directory of https://github.com/amarburg/go-lazycache-app. I&amp;rsquo;ve done an imperfect modification of the text below&amp;hellip;
 For totally arbitrary, er, I mean perfectly reasonable reasons, I&amp;rsquo;ve decided to target Google Cloud Platform as my strawman &amp;ldquo;commercial cloud&amp;rdquo; provider. I still believe there&amp;rsquo;s a use case for deploying the software &amp;mdash; or some subset of it &amp;mdash; on a local or lab machine, but it certainly makes a lot of sense to have the server capable of running in the cloud, whether it&amp;rsquo;s public or strictly private to service a set of local compute instances, so this seemed like a good place to start.</description>
     </item>
     
     <item>
       <title>A Brief Tour of LazyCache Part I, the Software</title>
-      <link>https://camhd-analysis.github.io/post/2017-01-24-current-status/</link>
+      <link>https://www.camhd.science/post/2017-01-24-current-status/</link>
       <pubDate>Tue, 24 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-01-24-current-status/</guid>
+      <guid>https://www.camhd.science/post/2017-01-24-current-status/</guid>
       <description>With the time set aside for the eScience Incubator, I&amp;rsquo;ve reached a (very) minimal working example of the CamHD caching/server software which is fully deployable to a Google Compute Engine instance. It isn&amp;rsquo;t terribly stable or configurable, but I can make improve those slowly.
 It seems like a good time to step back, take stock and document. At this point I&amp;rsquo;m going to worry about how I&amp;rsquo;m doing it. What and why I&amp;rsquo;m doing it is a whole &amp;lsquo;nother story.</description>
     </item>
     
     <item>
       <title>Winter 2017 eScience Incubator</title>
-      <link>https://camhd-analysis.github.io/post/2017-01-05-escience-incubator/</link>
+      <link>https://www.camhd.science/post/2017-01-05-escience-incubator/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2017-01-05-escience-incubator/</guid>
+      <guid>https://www.camhd.science/post/2017-01-05-escience-incubator/</guid>
       <description>My (Aaron&amp;rsquo;s) contribution to this project has been accepted for the 2017 UW eScience Institute Winter 2017 Incubator. It&amp;rsquo;s the first day in the office for this ten week program and I&amp;rsquo;m meeting the other participants.
 Besides the technical support from the eScience analysts on image processing, data handling and cloud compute, I&amp;rsquo;m really looking forward to being forced to explain and justify my design decision in detail. Working by myself, I miss the opportunity for design review.</description>
     </item>
     
     <item>
       <title>LazyFS Rev 1</title>
-      <link>https://camhd-analysis.github.io/post/2016-12-26-lazyfs-and-friends/</link>
+      <link>https://www.camhd.science/post/2016-12-26-lazyfs-and-friends/</link>
       <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2016-12-26-lazyfs-and-friends/</guid>
+      <guid>https://www.camhd.science/post/2016-12-26-lazyfs-and-friends/</guid>
       <description>I found myself with lots of time to think and very little time to program in December. This was good as I think my understanding of the CamHD problem evolved over that time, but I wasn&amp;rsquo;t able to really start sketching out ideas.
 I realized one of my mental blocks was choice of languages. Tim works in Python. I don&amp;rsquo;t know Python (at least not well enough to really do a good job starting from scratch), preferring Ruby for my scripting needs and C/C++ for compiled languages.</description>
     </item>
     
     <item>
       <title>Sample Time Lapse Movies</title>
-      <link>https://camhd-analysis.github.io/post/2016-12-02-time-lapse/</link>
+      <link>https://www.camhd.science/post/2016-12-02-time-lapse/</link>
       <pubDate>Fri, 02 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2016-12-02-time-lapse/</guid>
+      <guid>https://www.camhd.science/post/2016-12-02-time-lapse/</guid>
       <description>Our friends over the Rutgers CI are assisting with this effort by having students hand-annotated the camera motion for videos in the archive.
 They&amp;rsquo;ve used those annotations to create a great set of time-lapse movies (on Google Drive).
 {:.center} For more info, see here under Axial Seamount Hydrothermal Vent HD Video Time Series Data</description>
@@ -216,21 +216,33 @@ They&amp;rsquo;ve used those annotations to create a great set of time-lapse mov
     
     <item>
       <title>Thinking out loud about accessing CamHD data</title>
-      <link>https://camhd-analysis.github.io/post/2016-11-30-thinking-aloud-about-specs/</link>
+      <link>https://www.camhd.science/post/2016-11-30-thinking-aloud-about-specs/</link>
       <pubDate>Wed, 30 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2016-11-30-thinking-aloud-about-specs/</guid>
+      <guid>https://www.camhd.science/post/2016-11-30-thinking-aloud-about-specs/</guid>
       <description>A core driver for this project is the difficulty in performing analyses with the CamHD data as it sits on the CI at Rutgers. Each 14-ish minute video collection generates an 11TB Prores file. At eight files per day, that&amp;rsquo;s about 616 GB/week, or 32TB / year.
 It seems like most analyses fall into two broad categories. Either you download a whole video, run it through some filter (make a time lapse, analyze the motion of the camera), or you want to download a small section of the video (perhaps even a few frames).</description>
     </item>
     
     <item>
       <title>Project kickoff!</title>
-      <link>https://camhd-analysis.github.io/post/2016-11-01-first-post/</link>
+      <link>https://www.camhd.science/post/2016-11-01-first-post/</link>
       <pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://camhd-analysis.github.io/post/2016-11-01-first-post/</guid>
+      <guid>https://www.camhd.science/post/2016-11-01-first-post/</guid>
       <description>First post!</description>
+    </item>
+    
+    <item>
+      <title>Running a local copy of lazycache</title>
+      <link>https://www.camhd.science/howto/running-local-lazycache/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.camhd.science/howto/running-local-lazycache/</guid>
+      <description>In most cases, if you&amp;rsquo;re making heavy use of Lazycache, it makes sense to run a local copy. Lazycache is packaged as a Docker image. Assuming you have Docker installed, you can run a local copy from the command line as:
+docker run --rm -p 8080:8080 amarburg/camhd_cache:latest  This will expose your local copy at port 8080.
+You can then pass this local URL to the pycamhd-lazycache Python module:
+import pycamhd.</description>
     </item>
     
   </channel>
