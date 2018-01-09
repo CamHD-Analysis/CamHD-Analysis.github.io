@@ -1,4 +1,4 @@
-baseURL = "https://camhd-analysis.github.io/"
+baseURL = "https://www.camhd.science/"
 publishDir = "site/public-www/"
 languageCode = "en-us"
 title = "CamHD Video Analysis"
@@ -9,6 +9,8 @@ DefaultContentLanguage = "en"
 SectionPagesMenu = "main"
 googleAnalytics = ""
 enableRobotsTXT = true
+
+pygmentsCodeFences = true
 
 [sitemap]
   changefreq = "monthly"
