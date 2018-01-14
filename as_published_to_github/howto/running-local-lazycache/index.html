@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>CamHD Video Analysis  | Running a local copy of lazycache</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.31.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    <link href='https://camhd-analysis.github.io/dist/main.css' rel='stylesheet' type="text/css" />
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Running a local copy of lazycache" />
+<meta property="og:description" content="In most cases, if you&rsquo;re making heavy use of Lazycache, it makes sense to run a local copy. Lazycache is packaged as a Docker image. Assuming you have Docker installed, you can run a local copy from the command line as:
+docker run --rm -p 8080:8080 amarburg/camhd_cache:latest  This will expose your local copy at port 8080.
+You can then pass this local URL to the pycamhd-lazycache Python module:
+import pycamhd." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://camhd-analysis.github.io/howto/running-local-lazycache/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Running a local copy of lazycache">
+<meta itemprop="description" content="In most cases, if you&rsquo;re making heavy use of Lazycache, it makes sense to run a local copy. Lazycache is packaged as a Docker image. Assuming you have Docker installed, you can run a local copy from the command line as:
+docker run --rm -p 8080:8080 amarburg/camhd_cache:latest  This will expose your local copy at port 8080.
+You can then pass this local URL to the pycamhd-lazycache Python module:
+import pycamhd.">
+
+
+
+<meta itemprop="wordCount" content="78">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Running a local copy of lazycache"/>
+<meta name="twitter:description" content="In most cases, if you&rsquo;re making heavy use of Lazycache, it makes sense to run a local copy. Lazycache is packaged as a Docker image. Assuming you have Docker installed, you can run a local copy from the command line as:
+docker run --rm -p 8080:8080 amarburg/camhd_cache:latest  This will expose your local copy at port 8080.
+You can then pass this local URL to the pycamhd-lazycache Python module:
+import pycamhd."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://camhd-analysis.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      CamHD Video Analysis
+    </a>
+    <div class="flex-l items-center">
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/howto/" title=" page">
+              
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/page/" title="Pages page">
+              Pages
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <p class="f6 b helvetica tracked">
+        
+        HOWTO
+      </p>
+      <h1 class="f1 athelas">
+        Running a local copy of lazycache
+      </h1>
+        
+        
+      <time class="f6 mv4 dib tracked" datetime="0001-01-01T00:00:00Z">
+        January 1, 0001
+      </time>
+      <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray">
+        <p>In most cases, if you&rsquo;re making heavy use of Lazycache, it makes sense to
+run a local copy.   Lazycache is packaged as a Docker image.   Assuming you have <a href="https://www.docker.com/community-edition#/download">Docker installed</a>, you can
+run a local copy from the command line as:</p>
+
+<pre><code>docker run --rm -p 8080:8080 amarburg/camhd_cache:latest
+</code></pre>
+
+<p>This will expose your local copy at port 8080.</p>
+
+<p>You can then pass this local URL to the <a href="https://github.com/CamHD-Analysis/pycamhd-lazycache">pycamhd-lazycache</a> Python module:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pycamhd.lazycache <span style="color:#f92672">as</span> lqt
+
+lqt <span style="color:#f92672">=</span> lqt<span style="color:#f92672">.</span>lazycache( url<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;http://localhost:8080/v1/org/oceanobservatories/rawdata/files/&#34;</span>)
+
+<span style="color:#66d9ef">print</span>( lqt<span style="color:#f92672">.</span>get_metadata(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;RS03ASHS/PN03B/06-CAMHDA301/2017/09/30/CAMHDA301-20170930T211500.mov&#34;</span>))</code></pre></div>
+      </section>
+      
+
+
+    </article>
+    
+  </div>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/" >
+    &copy; 2018 CamHD Video Analysis
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    <script src="https://camhd-analysis.github.io/dist/app.bundle.js" async></script>
+
+  </body>
+</html>

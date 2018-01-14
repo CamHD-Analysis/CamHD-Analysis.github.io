@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>CamHD Video Analysis  | Scaling out Image Analysis, Part Two:   Making the Docker Image</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.31.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    <link href='https://camhd-analysis.github.io/dist/main.css' rel='stylesheet' type="text/css" />
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Scaling out Image Analysis, Part Two:   Making the Docker Image" />
+<meta property="og:description" content="Docker containers are an essential component of my scaled analysis. They bring two big benefits to the table: First, I can use it as a kind of heavy-weight package management system, allowing me to wrap up my software and all its messy dependencies into a monolithic image, and easily publish that image to a central repository, knowing that all of the dependency wierdness will be (mostly) ironed out. Second, it lets me separate worker units from hardware units." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://camhd-analysis.github.io/post/2017-07-05-scaling-up-frame-analysis-part-two/" />
+
+
+
+<meta property="article:published_time" content="2017-07-05T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-07-05T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Scaling out Image Analysis, Part Two:   Making the Docker Image">
+<meta itemprop="description" content="Docker containers are an essential component of my scaled analysis. They bring two big benefits to the table: First, I can use it as a kind of heavy-weight package management system, allowing me to wrap up my software and all its messy dependencies into a monolithic image, and easily publish that image to a central repository, knowing that all of the dependency wierdness will be (mostly) ironed out. Second, it lets me separate worker units from hardware units.">
+
+
+<meta itemprop="datePublished" content="2017-07-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-07-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="879">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Scaling out Image Analysis, Part Two:   Making the Docker Image"/>
+<meta name="twitter:description" content="Docker containers are an essential component of my scaled analysis. They bring two big benefits to the table: First, I can use it as a kind of heavy-weight package management system, allowing me to wrap up my software and all its messy dependencies into a monolithic image, and easily publish that image to a central repository, knowing that all of the dependency wierdness will be (mostly) ironed out. Second, it lets me separate worker units from hardware units."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://camhd-analysis.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      CamHD Video Analysis
+    </a>
+    <div class="flex-l items-center">
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/howto/" title=" page">
+              
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/page/" title="Pages page">
+              Pages
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <p class="f6 b helvetica tracked">
+        
+        POST
+      </p>
+      <h1 class="f1 athelas">
+        Scaling out Image Analysis, Part Two:   Making the Docker Image
+      </h1>
+        
+        
+      <time class="f6 mv4 dib tracked" datetime="2017-07-05T00:00:00Z">
+        July 5, 2017
+      </time>
+      <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray">
+        
+
+<p><a href="https://www.docker.com">Docker</a> containers are an essential component of my
+scaled analysis.  They bring two big benefits to the table:  First, I can use it
+as a kind of heavy-weight package management system, allowing me to wrap up my
+software and all its messy dependencies into a monolithic image, and easily
+publish that image to a central repository, knowing that all of the dependency
+wierdness will be (mostly) ironed out. Second, it lets me separate worker units
+from hardware units.   That is, I can turn any computer into a worker unit by
+simply downloading and starting the Docker image.   Individual pieces of
+hardware (or pieces of virtual hardware) can transparently change roles (or take
+on new roles) by starting/stopping Docker images.</p>
+
+<p>My image analysis application runs as a service in a Docker container and
+uses <code>lazycache</code> to retrieve frames from the videos on the CI.   It can use a
+public instance of <code>lazycache</code>, but in this case, I also run a cluster of
+<code>lazycache</code> instances on the worker swarm, providing some degree of parallel
+processing.   The frame retrieval is a small (though not trivial) fraction of
+the processing time.</p>
+
+<p>These two services are kept in separate Dockerfiles.</p>
+
+<h2 id="lazycache">lazycache</h2>
+
+<p>The main <code>lazycache</code> Docker image is in the <a href="https://github.com/amarburg/go-lazycache/blob/master/deploy/docker/Dockerfile">in the <code>deploy/docker/</code> directory</a> of the <a href="https://github.com/amarburg/go-lazycache/">go-lazycache</a> repository.</p>
+
+<p>Here are the interesting bits:</p>
+
+<pre><code>FROM amarburg/golang-ffmpeg:wheezy-1.8
+</code></pre>
+
+<p>It&rsquo;s based on my
+<a href="https://github.com/amarburg/docker-golang-ffmpeg">docker-golang-ffmpeg</a> image,
+which is built on top of the canonical <a href="https://hub.docker.com/_/golang/">GoLang Docker
+image</a> built on Debian &mdash; I used full-fat
+Debian, rather than Alpine or similar lightweight Linuxes, to ensure I could get
+all of audio-visual dependencies needed for ffmpeg.   The docker-golang-ffmpeg includes <a href="http://ffmpeg.org/">ffmpeg</a> built from source (using <a href="https://github.com/amarburg/docker-golang-ffmpeg/blob/master/build_ffmpeg.sh">this script</a>).</p>
+
+<p>The standard <code>go get</code> mechanism is used to download the source code from
+Github into the Go environment.</p>
+
+<pre><code>RUN go get -v github.com/amarburg/go-lazycache
+
+## Hot patch local files into the repo
+ADD *.go $GOPATH/src/amarburg/go-lazycache/app/
+</code></pre>
+
+<p>I &ldquo;hot patch&rdquo; the source code with
+the <code>main.go</code> from the current directory, which contains configuration
+specific to the Docker version.  In the long run this shouldn&rsquo;t be necessary,
+with more of the configuration shifting through config files or environment variables, but it was a cheap and easy way to implement version-specific changes.
+Even now the differences are relatively minor.</p>
+
+<p>Then get dependencies, build the application and copy it to <code>$GOPATH/</code>:</p>
+
+<pre><code>WORKDIR $GOPATH/src/github.com/amarburg/go-lazycache/app
+RUN go get -v .
+RUN go build -o lazycache .
+RUN cp lazycache $GOPATH/
+</code></pre>
+
+<p>And some Docker image configuration.   Lazycache uses post 8080 by default,
+the standard port of microservices in <a href="https://cloud.google.com/appengine/">GAE</a>.</p>
+
+<pre><code>ENV LAZYCACHE_PORT=8080
+CMD $GOPATH/lazycache
+EXPOSE 8080
+</code></pre>
+
+<p>Once built, I push a copy of the image to <a href="https://hub.docker.com/r/amarburg/lazycache_prod/">Docker Hub</a>.</p>
+
+<h2 id="image-analysis">image-analysis</h2>
+
+<p>The deployment
+tools for the image analysis worker are also stored <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy">on GitHub</a>.
+These containers have slightly more going on, so the build and test process
+is currently orchestrated through a <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Rakefile">Rakefile</a>.</p>
+
+<p>There are actually two worker images defined:</p>
+
+<ol>
+<li><code>worker_rq_prod</code> is the <em>production</em> image, which builds
+<code>camhd_motion_analysis</code> from a clean clone from Github.</li>
+<li><code>worker_rq_test</code> is the <em>test</em> image.  It copies the <code>camhd_motion_analysis</code> source from a the local disk, then builds in the Docker image.</li>
+</ol>
+
+<p>The <code>Dockerfiles</code> are otherwise similar.  Both depend on a <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Dockerfile_rq_base"><code>worker_rq_base</code> image</a>
+which is a base Ubuntu image with all manner of dependencies installed,
+including OpenCV and gcc through <code>apt</code>, [miniconda](), a whack of Python tools,
+and my <a href="https://github.com/CamHD-Analysis/pycamhd-lazycache"><code>pycamhd-lazycache</code></a> Python library.</p>
+
+<p>The <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Dockerfile_rq_prod"><code>Dockerfile_rq_prod</code></a> file itself is pretty straightforward.  It starts from the base image:</p>
+
+<pre><code>FROM camhd_motion_analysis_rq_worker_base:latest
+MAINTAINER Aaron Marburg &lt;amarburg@apl.washington.edu&gt;
+</code></pre>
+
+<p>Clone the code from Github, and initialize the Git submodules, then provide an initial default configuration to <a href="https://www.conan.io">conan</a></p>
+
+<pre><code>WORKDIR /code
+RUN git clone https://github.com/CamHD-Analysis/camhd_motion_analysis.git
+
+WORKDIR /code/camhd_motion_analysis
+RUN git submodule init &amp;&amp; git submodule update
+
+## Initial conan configuration
+RUN conan config set settings_defaults.compiler.libcxx=libstdc++11
+</code></pre>
+
+<p>Build and install the C++ portion of the app.</p>
+
+<pre><code>ENV BUILD_DIR docker-Release
+ENV VERBOSE 1
+
+RUN rake release:build
+
+WORKDIR docker-Release
+RUN make install &amp;&amp; make clean
+RUN ldconfig
+</code></pre>
+
+<p>Define an volume for storing the results,</p>
+
+<pre><code>VOLUME /output/CamHD_motion_metadata
+</code></pre>
+
+<p>Finally, the standard entrypoint to the image is a <a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/launch_worker.sh">local shell file</a>.</p>
+
+<pre><code>ADD launch_worker.sh  /code
+ENTRYPOINT [&quot;/code/launch_worker.sh&quot;]
+</code></pre>
+
+<p>The shell script provides a place for validation before launching the app.  In
+this case it checks that the output directory contains a <code>README.md</code> file,
+my lame attempt at checking that it&rsquo;s really a clone of <a href="https://github.com/CamHD-Analysis/CamHD_motion_metadata">CamHD_motion_metadata</a>.</p>
+
+<pre><code>#!/bin/bash
+
+if [ ! -f $OUTPUT_DIR/README.md ]; then
+  echo &quot;Could not find output directory $OUTPUT_DIR&quot;
+  exit
+fi
+
+/code/camhd_motion_analysis/python/rq_worker.py &quot;$@&quot;
+</code></pre>
+
+<p>Again, I use Docker tags to keep track of image versions, and
+distribute the production images through <a href="https://hub.docker.com/r/amarburg/camhd_motion_analysis_rq_worker/">Docker Hub</a>.
+If I was really worried about security, of course, I could use a private Docker repo,  but then I would have to think about authentication&hellip;</p>
+
+<p>While the production workers run in a Docker swarm, and are orchestrated by RQ,
+I can run the Docker image standalone to test the worker code.   This is all
+documented (sloppily) in the
+<a href="https://github.com/CamHD-Analysis/camhd-motion-analysis-deploy/blob/master/docker/Rakefile">Rakefile</a>
+in the repo.</p>
+
+<p>Secrets and configuration are passed to the Docker images using an
+environment variable file using the <code>--env-file</code> arg to Docker:</p>
+
+<pre><code>RQ_REDIS_URL=redis://:myredispassword@my.redis.ip.address/0
+OUTPUT_DIR=/output/CamHD_motion_metadata
+</code></pre>
+
+<p>I can test different configurations by swapping in different sets of configuration
+variables:</p>
+
+<pre><code>docker run --env-file prod.env amarburg/camhd_motion_analysis_rq_worker:latest
+</code></pre>
+
+<p>or</p>
+
+<pre><code>docker run --env-file test.env amarburg/camhd_motion_analysis_rq_worker:latest
+</code></pre>
+
+<p>For example, to have the workers connect to different Redis instances (or different queues on the same instance).</p>
+
+<p><strong>See also <a href="{{ site.baseurl }}{% post_url 2017-06-16-scaling-up-frame-analysis-part-one %}">the introductory post</a> in this series and <a href="{{ site.baseurl }}{% post_url  2017-07-06-scaling-up-frame-analysis-part-three %}">the third post</a> on working with RQ.</strong></p>
+
+      </section>
+      
+
+
+    </article>
+    
+  </div>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/" >
+    &copy; 2018 CamHD Video Analysis
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    <script src="https://camhd-analysis.github.io/dist/app.bundle.js" async></script>
+
+  </body>
+</html>

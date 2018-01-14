@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gce Lazycache on CamHD Video Analysis</title>
+    <link>https://camhd-analysis.github.io/categories/gce-lazycache/</link>
+    <description>Recent content in Gce Lazycache on CamHD Video Analysis</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://camhd-analysis.github.io/categories/gce-lazycache/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Benchmarking Frame Access Methods II, Google Compute Engine</title>
+      <link>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</link>
+      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</guid>
+      <description>Following on the first round of benchmarking, I repeated the Lazycache-oriented portion of the benchmarks from a Google Compute Engine instance.
+To do this I started a GCE instance in the same zone (but in a different project) as my Google App Engine Lazycache instance. I used a n1-highcpu-4 (4 vCPUs, 3.6 GB memory) running Ubuntu 16.04LTS. Once the machine was provisioned I installed Miniconda manually, and then Jupyter notebook and all of the dependencies.</description>
+    </item>
+    
+  </channel>
+</rss>

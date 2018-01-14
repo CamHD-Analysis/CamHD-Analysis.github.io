@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lazycache on CamHD Video Analysis</title>
+    <link>https://camhd-analysis.github.io/categories/lazycache/</link>
+    <description>Recent content in Lazycache on CamHD Video Analysis</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://camhd-analysis.github.io/categories/lazycache/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Improvements to CamHD_Motion_Metadata documentation</title>
+      <link>https://camhd-analysis.github.io/post/2017-11-17-new-documentation/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/post/2017-11-17-new-documentation/</guid>
+      <description>I&amp;rsquo;ve recently hired a couple of UW Masters of Data Science students to help me clean up the code. Nothing like a fresh set of eyes to find all of the crazy idiosyncracies I&amp;rsquo;ve introduced to the process.
+As part of that, I&amp;rsquo;ve been trying to clean up the documentation in CamHD_motion_metadata including a new description of the full processing chain.</description>
+    </item>
+    
+    <item>
+      <title>Performance improvements to Lazycache</title>
+      <link>https://camhd-analysis.github.io/post/2017-10-05-new-faster-lazycache/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://camhd-analysis.github.io/post/2017-10-05-new-faster-lazycache/</guid>
+      <description>I&amp;rsquo;ve completed a round of profiling in Lazycache and implemented a few new features which greatly speed up image retrieval in a couple of important cases:
+ Lazycache now takes the argument --file-overlay, which specifies a local (on the web server) location containing CAMHD files. These files will be used preferentially over contacting Rutgers directly. By default, it expects to have the same directory hierarchy as Rutgers (/RS03ASHS/PN03B/06-CAMHDA301/...). If the option --file-overlay-flatten is specified, it assumes the *.</description>
+    </item>
+    
+  </channel>
+</rss>

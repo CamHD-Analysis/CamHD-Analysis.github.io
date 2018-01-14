@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>CamHD Video Analysis  | My Notes on Trying out Deis Workflow on Google Container Engine</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.31.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    <link href='https://camhd-analysis.github.io/dist/main.css' rel='stylesheet' type="text/css" />
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="My Notes on Trying out Deis Workflow on Google Container Engine" />
+<meta property="og:description" content="Over the last couple of weeks I&rsquo;ve been exploring the range of offerings from Google Cloud Platform. I started out working with base Google Compute Engine (GCE) virtual instances, as it&rsquo;s the &ldquo;ground floor&rdquo; on the technology pyramid and seemed like a good place to start. With Docker as a common platform, it&rsquo;s pretty straightforward to spin up single GCE instances which automatically load and run a Docker image." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://camhd-analysis.github.io/post/2017-02-13-trying-out-deis-workflow/" />
+
+
+
+<meta property="article:published_time" content="2017-02-13T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-02-13T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="My Notes on Trying out Deis Workflow on Google Container Engine">
+<meta itemprop="description" content="Over the last couple of weeks I&rsquo;ve been exploring the range of offerings from Google Cloud Platform. I started out working with base Google Compute Engine (GCE) virtual instances, as it&rsquo;s the &ldquo;ground floor&rdquo; on the technology pyramid and seemed like a good place to start. With Docker as a common platform, it&rsquo;s pretty straightforward to spin up single GCE instances which automatically load and run a Docker image.">
+
+
+<meta itemprop="datePublished" content="2017-02-13T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-02-13T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1258">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="My Notes on Trying out Deis Workflow on Google Container Engine"/>
+<meta name="twitter:description" content="Over the last couple of weeks I&rsquo;ve been exploring the range of offerings from Google Cloud Platform. I started out working with base Google Compute Engine (GCE) virtual instances, as it&rsquo;s the &ldquo;ground floor&rdquo; on the technology pyramid and seemed like a good place to start. With Docker as a common platform, it&rsquo;s pretty straightforward to spin up single GCE instances which automatically load and run a Docker image."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://camhd-analysis.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      CamHD Video Analysis
+    </a>
+    <div class="flex-l items-center">
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/howto/" title=" page">
+              
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/page/" title="Pages page">
+              Pages
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <p class="f6 b helvetica tracked">
+        
+        POST
+      </p>
+      <h1 class="f1 athelas">
+        My Notes on Trying out Deis Workflow on Google Container Engine
+      </h1>
+        
+        
+      <time class="f6 mv4 dib tracked" datetime="2017-02-13T00:00:00Z">
+        February 13, 2017
+      </time>
+      <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray">
+        
+
+<p>Over the last couple of weeks I&rsquo;ve been exploring the range of offerings from <a href="https://cloud.google.com/">Google Cloud Platform</a>.  I started out working with <a href="{{site.baseurl}}{% post_url 2017-01-25-deploying-to-google-cloud %}">base Google Compute Engine (GCE) virtual instances</a>, as it&rsquo;s the &ldquo;ground floor&rdquo; on the technology pyramid and seemed like a good place to start.   With Docker as a common platform, it&rsquo;s <a href="https://github.com/amarburg/go-lazycache-app/tree/master/deploy/gce_standalone">pretty straightforward</a> to spin up single GCE instances which automatically load and run a Docker image.</p>
+
+<p>I then went all the way to the other end of the spectrum, looking at <a href="https://cloud.google.com/appengine/">Google App Engine</a>, which is their highest-level, most abstracted product.   At a very hand-wavy level, App Engine will take raw source code (in Go, Python, Ruby, etc.) and host it in an automatically scaling cluster of instances with all the services you might need: logging, an in-memory cache, cloud data store, etc, plus a bunch of deployment niceties like versioning, rollback, etc.    The only real requirement is that each of your code chunks communicates with everyone else over HTTP, which is a pretty low bar in this magical new micro-services, <a href="https://12factor.net">12-factor</a> world.</p>
+
+<p>And so far, App Engine is pretty great.  The only real problem (such as it is) is that you can&rsquo;t get under the hood, should you want to.   And you do pay a small lock-in price as you have to adapt your app to App Engine (responding to particular health check requests over HTTP, for example).  Long-term I think App Engine has the most promise.</p>
+
+<p>But, for the sake of argument there is an in-between option.  <a href="https://cloud.google.com/container-engine/">Google Container Enginer</a> (GKE &hellip; because GCE was already taken and, uh, because Kubernetes) is a hosted version of the (Google-developed) <a href="https://kubernetes.io">Kubernetes</a> platform.   Kubernetes is the in-between option in all the best and worst ways.  All the power and configuratability of a great clustering platform, but you need to be comfortable getting into the guts sometimes.</p>
+
+<p>I&rsquo;ve been interested in <a href="https://deis.com/docs/workflow/">Deis Workflow</a>, a set of tools designed to &ldquo;[add] a developer-friendly layer to any Kubernetes cluster, making it easy to deploy and manage applications.&rdquo;  That is, it makes a raw Kubernetes cluster more App-Engine-like.   Seemed worth a try.</p>
+
+<p>For my notes, these are the inital steps for using Workflow to interact with a GKE-hosted Kubernetes cluster.  It&rsquo;s based on the Deis <a href="https://deis.com/docs/workflow/quickstart/">Quick Start</a></p>
+
+<h1 id="prerequisites">Prerequisites</h1>
+
+<ol>
+<li>Be able to create a GKE cluster through the web interface.   I&rsquo;m going to use a new project called <em>&ldquo;gke-deis-practice&rdquo;</em></li>
+<li>Have the <code>gcloud</code> command-line tool <a href="https://cloud.google.com/sdk/docs/">installed</a>.</li>
+</ol>
+
+<p>Should be able to do:</p>
+
+<pre><code>% gcloud projects list
+PROJECT_ID             NAME                     PROJECT_NUMBER
+gke-deis-practice      gke-deis-practice        102832194405
+</code></pre>
+
+<p>I&rsquo;ve been using configurations to connect to my different projects.</p>
+
+<pre><code>% gcloud config configurations list
+NAME                 IS_ACTIVE  ACCOUNT                                             PROJECT                DEFAULT_ZONE  DEFAULT_REGION
+gke-deis-practice    False      amarburg@apl.washington.edu                         gke-deis-practice      us-west1-b    us-west1
+
+% gcloud config configurations activate gke-deis-practice
+</code></pre>
+
+<p>It&rsquo;s actually a bit awkward to work on multiple projects at once.   To create a new configuration, use <code>gcloud init</code></p>
+
+<pre><code>% gcloud init
+Welcome! This command will take you through the configuration of gcloud.
+
+Settings from your current configuration [gke-deis-practice] are:
+Your active configuration is: [gke-deis-practice]
+
+[compute]
+region = us-west1
+zone = us-west1-b
+[core]
+account = amarburg@apl.washington.edu
+disable_usage_reporting = False
+project = gke-deis-practice
+
+Pick configuration to use:
+[1] Re-initialize this configuration [gke-deis-practice] with new settings
+[2] Create a new configuration
+[3] Switch to and re-initialize existing configuration: [default]
+[4] Switch to and re-initialize existing configuration: [lazycache-appengine]
+</code></pre>
+
+<p>Once configured, you should be able to list your container clusters:</p>
+
+<pre><code>% gcloud container clusters list
+NAME       ZONE        MASTER_VERSION  MASTER_IP        MACHINE_TYPE   NODE_VERSION  NUM_NODES  STATUS
+cluster-1  us-west1-b  1.5.2           104.198.103.249  n1-standard-2  1.5.2         3          RUNNING
+</code></pre>
+
+<h1 id="using-kubectl">Using kubectl</h1>
+
+<p>The main tool for interfacing with a Kubernetes cluster is the command-line tool <code>kubectl</code> (<a href="https://kubernetes.io/docs/user-guide/prereqs/">installation instructions here</a>).   <code>Kubectl</code> uses a <code>kubeconfig</code> to know which cluster to talk to.   You can supply a <code>kubeconfig</code> on the command line, otherwise it looks for a default file at <code>~/.kube/config</code></p>
+
+<p>The <code>gcloud</code> utility can be used to automatically set up a <code>kubeconfig</code> for the current cluster/project.  This is nice if you&rsquo;re working on one project at a time but I wonder if it leaves you open to problems if you&rsquo;re switching between projects.</p>
+
+<p>The command</p>
+
+<pre><code>aaron@ursine:~/workspace/camhd_analysis$ gcloud container clusters get-credentials cluster-1
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for cluster-1.
+</code></pre>
+
+<p>Will configure <code>kubectl</code> for the named cluster in the current project.</p>
+
+<p>If everything is going right, then <code>kubectl cluster-info</code> will provide some, uh, cluster info.</p>
+
+<pre><code>aaron@ursine:~/workspace/camhd_analysis$ kubectl cluster-info
+Kubernetes master is running at https://104.198.103.249
+GLBCDefaultBackend is running at https://104.198.103.249/api/v1/proxy/namespaces/kube-system/services/default-http-backend
+Heapster is running at https://104.198.103.249/api/v1/proxy/namespaces/kube-system/services/heapster
+KubeDNS is running at https://104.198.103.249/api/v1/proxy/namespaces/kube-system/services/kube-dns
+kubernetes-dashboard is running at https://104.198.103.249/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
+</code></pre>
+
+<p>This lists a bunch of administrative processes which GKE starts by default.</p>
+
+<p>For what it&rsquo;s worth, there&rsquo;s also a useful web-based dashboard included with Kubernetes.  The simplest way to access it is through the <code>kubectl proxy</code> command which will start a local proxy server which connects to the remote UI process:</p>
+
+<pre><code>aaron@ursine:~/workspace/camhd_analysis$ kubectl proxy
+Starting to serve on 127.0.0.1:8001
+</code></pre>
+
+<p>{:.center}
+<img src="{{site.baseurl}}/images/kubernetes_ui.jpg" alt="Kubernetes UI" /></p>
+
+<h1 id="install-deis-and-helm">Install Deis and Helm</h1>
+
+<p>Deis is based on the related tool <code>helm</code> which is a kind of package manager for Kubernetes clusters.   To use Deis, you need to <a href="https://deis.com/docs/workflow/quickstart/install-cli-tools/">install its command line tools</a> and <a href="https://github.com/kubernetes/helm#install">helm</a>.  Having done that:</p>
+
+<pre><code>% deis version
+v2.11.0
+</code></pre>
+
+<p>doing</p>
+
+<pre><code>% helm init
+</code></pre>
+
+<p>will initialize (and install the assocaited <code>tiller</code> tool on the <strong>kubernetes cluster</strong>.  Check that helm is working both on the local machine and the server:</p>
+
+<pre><code>% helm version
+Client: &amp;version.Version{SemVer:&quot;v2.1.3&quot;, GitCommit:&quot;5cbc48fb305ca4bf68c26eb8d2a7eb363227e973&quot;, GitTreeState:&quot;clean&quot;}
+Server: &amp;version.Version{SemVer:&quot;v2.1.3&quot;, GitCommit:&quot;5cbc48fb305ca4bf68c26eb8d2a7eb363227e973&quot;, GitTreeState:&quot;clean&quot;}
+</code></pre>
+
+<p>Then register the package repository for Deis in Helm (on the Kubernetes cluster?)</p>
+
+<pre><code>% helm repo add deis https://charts.deis.com/workflow
+</code></pre>
+
+<p>Then install Deis <strong>on the kubernetes cluster</strong></p>
+
+<pre><code>% helm install deis/workflow --namespace deis
+</code></pre>
+
+<p>This simple command sets some pretty big wheels in motion, as it creates all of the Deis processes on the cluster.
+If everything goes right, the cluster will have many Deis-related programs running on it (it took a few minutes when I did it)</p>
+
+<pre><code>% kubectl --namespace=deis get pods
+NAME                                     READY     STATUS    RESTARTS   AGE
+deis-builder-574352672-kr5hb             1/1       Running   5          1d
+deis-controller-3611266332-rnz7l         1/1       Running   3          1d
+deis-database-4237974775-scc51           1/1       Running   0          11h
+deis-logger-176328999-d75ht              1/1       Running   2          11h
+deis-logger-fluentd-7b7qr                1/1       Running   0          1d
+deis-logger-fluentd-v1b5v                1/1       Running   0          1d
+deis-logger-fluentd-vhb6k                1/1       Running   0          1d
+deis-logger-redis-304849759-w37bq        1/1       Running   0          11h
+deis-minio-676004970-6zchb               1/1       Running   0          11h
+deis-monitor-grafana-432496062-bh7sf     1/1       Running   0          1d
+deis-monitor-influxdb-2729657543-pn3vp   1/1       Running   0          11h
+deis-monitor-telegraf-6c6qp              1/1       Running   0          1d
+deis-monitor-telegraf-c562v              1/1       Running   1          1d
+deis-monitor-telegraf-ltfd9              1/1       Running   0          1d
+deis-nsqd-3597503299-81t3n               1/1       Running   0          11h
+deis-registry-586147784-hj2bv            1/1       Running   1          11h
+deis-registry-proxy-72kpd                1/1       Running   0          1d
+deis-registry-proxy-83jxp                1/1       Running   0          1d
+deis-registry-proxy-jstq5                1/1       Running   0          1d
+deis-router-2099956932-t4mzb             1/1       Running   0          11h
+deis-workflow-manager-2528409207-d7wd0   1/1       Running   0          1d
+</code></pre>
+
+<h1 id="connecting-to-deis-on-the-cluster">Connecting to Deis on the cluster</h1>
+
+<p>You now need to find the public IP of your cluster.   Deis starts a load-balanced router (apparently) as <code>deis-router</code>, and you need to get it&rsquo;s outward-facing IP, as so:</p>
+
+<pre><code>% kubectl --namespace=deis describe svc deis-router | grep Ingress
+LoadBalancer Ingress:   104.199.124.217
+</code></pre>
+
+<p>Interestingly, this isn&rsquo;t the same as the GKE endpoint:</p>
+
+<p>{:.center}
+<img src="{{site.baseurl}}/images/gke_endpoint.jpg" alt="Kubernetes UI" /></p>
+
+<p>Um, ok.</p>
+
+<p>Kubernetes (and App Engine, for what it&rsquo;s worth) use deep stacks of domain names to identify different endpoints within a cluster.   So, for example <code>http://service.mycluster.org/</code> would try to talk to the service <code>service</code> in the Kubernetes cluster at <code>mycluster.org</code>.  Unfortunately, when you&rsquo;re just messing around and only have IP addresses, things get a little messy.</p>
+
+<p>Deis suggests using the service <code>nip.io</code> which maps IP addresses to domain names, so <code>104.199.124.217.nip.io</code> resolves to <em>104.199.124.217</em>, and <code>service.104.199.124.217.nip.io</code> also resolves to <em>104.199.124.217</em>, which is just what we want.</p>
+
+<p>We can use this to connect to the <code>deis</code> service on the cluster:</p>
+
+<pre><code>% curl http://deis.104.199.124.217.nip.io/v2/
+{&quot;detail&quot;:&quot;Authentication credentials were not provided.&quot;}
+</code></pre>
+
+<p>And create the admin user:</p>
+
+<pre><code>% deis register http://deis.104.199.124.217.nip.io/
+</code></pre>
+
+<p>The cluster is now ready to install an application&hellip;</p>
+
+      </section>
+      
+
+
+    </article>
+    
+  </div>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/" >
+    &copy; 2018 CamHD Video Analysis
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    <script src="https://camhd-analysis.github.io/dist/app.bundle.js" async></script>
+
+  </body>
+</html>
