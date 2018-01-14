@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DIR=$(dirname "$0")
-SITE_DIR="site/public-www/"
+SITE_DIR="as_published_to_github/"
 
 if [[ $(git status -s) ]]
 then
