@@ -4,6 +4,8 @@ languageCode = "en-us"
 title = "CamHD Video Analysis"
 theme = "ananke"
 
+ignoreFiles = [ ".git*", ".htmltest.yml" ]
+
 MetaDataFormat = "yaml"
 DefaultContentLanguage = "en"
 SectionPagesMenu = "main"
