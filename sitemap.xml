@@ -3,6 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://camhd-analysis.github.io/page/publications/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-11-17-new-documentation/</loc>
     <lastmod>2017-11-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -164,7 +171,7 @@
   
   <url>
     <loc>https://camhd-analysis.github.io/</loc>
-    <lastmod>2017-11-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -246,6 +253,13 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/page/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/</loc>
     <lastmod>2017-11-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -268,6 +282,12 @@
   
   <url>
     <loc>https://camhd-analysis.github.io/howto/running-local-lazycache/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/page/system-status/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
