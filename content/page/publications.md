@@ -1,5 +1,6 @@
 ---
 title: Publications
+date: 2018-01-14
 ---
 
 Marburg, A., T. J. Crone, and F. Knuth (2018) __Cloud-Accelerated Static Scene Labelling in Subsea High-Definition Video__. IEEE Winter Conference on Applications of Computer Vision, 2018 (WACV18). Lake Tahoe, CA. _Submitted_
