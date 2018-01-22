@@ -31,13 +31,6 @@
   </url>
   
   <url>
-    <loc>https://camhd-analysis.github.io/post/2017-07-27-using-the-regions-data/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://camhd-analysis.github.io/post/2017-07-13-ci-stats/</loc>
     <lastmod>2017-07-13T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -75,13 +68,6 @@
   <url>
     <loc>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</loc>
     <lastmod>2017-05-15T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</loc>
-    <lastmod>2017-05-02T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -211,13 +197,6 @@
   </url>
   
   <url>
-    <loc>https://camhd-analysis.github.io/categories/gce-lazycache/</loc>
-    <lastmod>2017-05-02T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://camhd-analysis.github.io/categories/lazycache/</loc>
     <lastmod>2017-11-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -269,13 +248,6 @@
   <url>
     <loc>https://camhd-analysis.github.io/categories/pycamhd-lazycache/</loc>
     <lastmod>2017-05-15T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/regions/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>

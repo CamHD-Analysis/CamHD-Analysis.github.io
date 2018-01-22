@@ -17,9 +17,9 @@
       <pubDate>Sun, 14 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>https://camhd-analysis.github.io/page/publications/</guid>
-      <description>Marburg, A., T. J. Crone, and F. Knuth (2018) Cloud-Accelerated Static Scene Labelling in Subsea High-Definition Video. IEEE Winter Conference on Applications of Computer Vision, 2018 (WACV18). Lake Tahoe, CA. Submitted
-Marburg, A., T. J. Crone, and F. Knuth (2018) Cloud-Accelerated Static Scene Labelling in Subsea HD Video. AGU 2018 Ocean Sciences Meeting. Portland, OR. Abstract submitted
-Marburg, A., T. J. Crone, and F. Knuth (2017) Cloud-Accelerated Analysis of Subsea High-Definition Camera Data.</description>
+      <description>Marburg, A., T. J. Crone, and F. Knuth (2018) Cloud-Accelerated Static Scene Labelling in Subsea HD Video. AGU 2018 Ocean Sciences Meeting. Portland, OR.
+Marburg, A., T. J. Crone, and F. Knuth (2017) Cloud-Accelerated Analysis of Subsea High-Definition Camera Data. MTS/IEEE Oceans 2017. Anchorage, AK.
+Knuth, F., A. Marburg, and T. J. Crone (2017) Deriving quantitative metrics from OOI high-definition video data for the purpose of automated QA/QC. Oceans 2017 MTS/IEEE, Anchorage, AK.</description>
     </item>
     
     <item>
@@ -49,17 +49,6 @@ As part of that, I&amp;rsquo;ve been trying to clean up the documentation in Cam
       
       <guid>https://camhd-analysis.github.io/post/2017-09-11-publications-page/</guid>
       <description>I&amp;rsquo;ve started a publications page for listing outputs from this project.</description>
-    </item>
-    
-    <item>
-      <title>How to use the regions metadata</title>
-      <link>https://camhd-analysis.github.io/post/2017-07-27-using-the-regions-data/</link>
-      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://camhd-analysis.github.io/post/2017-07-27-using-the-regions-data/</guid>
-      <description>This is a blog post I&amp;rsquo;ve been looking forward to for a long time. We haven&amp;rsquo;t processed and QC&amp;rsquo;ed all of the data, but we are starting to make data products for public consumption.
-Along the way, I&amp;rsquo;ve needed to grapple with some new questions:
- Where do I store the public metadata so it will be persistently accessible? How to I publicize the data, make it trackable and citeable?</description>
     </item>
     
     <item>
@@ -120,16 +109,6 @@ I&amp;rsquo;ve written a tool in Python / C++ / OpenCV, camhd_motion_analysis, w
       <guid>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</guid>
       <description>I&amp;rsquo;ve made an effort to cleanup and regularize my benchmarking code, and have tested it on my desktop here (in Seattle), on the CamHD Compute Engine and on Google Cloud instances.
 As detailed previously, we&amp;rsquo;re exploring a few different methods for efficiently extracting individual frames from CamHD movies. Tim&amp;rsquo;s pycamhd module does this extraction in native Python (with help from FFMpeg). My lazycache tool is designed to run as a service with an HTTP API, although coincidentally I&amp;rsquo;ve also developed a Python wrapper around the core Go-based frame extraction code.</description>
-    </item>
-    
-    <item>
-      <title>Benchmarking Frame Access Methods II, Google Compute Engine</title>
-      <link>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</link>
-      <pubDate>Tue, 02 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</guid>
-      <description>Following on the first round of benchmarking, I repeated the Lazycache-oriented portion of the benchmarks from a Google Compute Engine instance.
-To do this I started a GCE instance in the same zone (but in a different project) as my Google App Engine Lazycache instance. I used a n1-highcpu-4 (4 vCPUs, 3.6 GB memory) running Ubuntu 16.04LTS. Once the machine was provisioned I installed Miniconda manually, and then Jupyter notebook and all of the dependencies.</description>
     </item>
     
     <item>
