@@ -3,6 +3,38 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://camhd-analysis.github.io/</loc>
+    <lastmod>2019-07-25T14:57:14-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/</loc>
+    <lastmod>2019-07-25T14:57:14-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/fauna_segmentation/</loc>
+    <lastmod>2019-07-25T14:57:14-07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/page/</loc>
+    <lastmod>2019-07-25T14:57:14-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/page/fauna_segmentation/training_data/</loc>
+    <lastmod>2019-07-25T14:57:14-07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/page/publications/</loc>
     <lastmod>2018-01-14T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -14,6 +46,18 @@
     <lastmod>2017-11-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/post/</loc>
+    <lastmod>2017-11-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/lazycache/</loc>
+    <lastmod>2017-11-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -31,6 +75,19 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/post/2017-07-27-using-the-regions-data/</loc>
+    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/regions/</loc>
+    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-07-13-ci-stats/</loc>
     <lastmod>2017-07-13T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -38,10 +95,22 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/categories/ci-lazycache/</loc>
+    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-07-07-initial-performance-data/</loc>
     <lastmod>2017-07-07T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/lazycache-gcp-docker-swarm/</loc>
+    <lastmod>2017-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -59,6 +128,12 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/categories/lazycache-gcp-docker/</loc>
+    <lastmod>2017-07-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-06-16-scaling-up-frame-analysis-part-one/</loc>
     <lastmod>2017-06-16T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -66,10 +141,35 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/categories/lazycache-gcp/</loc>
+    <lastmod>2017-06-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-05-15-benchmarking-pycamhd-part-two/</loc>
     <lastmod>2017-05-15T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/pycamhd-lazycache/</loc>
+    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/post/2017-05-02-benchmarking-on-google-compute-engine/</loc>
+    <lastmod>2017-05-02T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/gce-lazycache/</loc>
+    <lastmod>2017-05-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -94,10 +194,22 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/categories/escience/</loc>
+    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-02-13-trying-out-deis-workflow/</loc>
     <lastmod>2017-02-13T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/escience-lazycache-gcp/</loc>
+    <lastmod>2017-02-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -115,6 +227,12 @@
   </url>
   
   <url>
+    <loc>https://camhd-analysis.github.io/categories/escience-lazycache/</loc>
+    <lastmod>2017-01-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://camhd-analysis.github.io/post/2017-01-05-escience-incubator/</loc>
     <lastmod>2017-01-05T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -126,6 +244,12 @@
     <lastmod>2016-12-26T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://camhd-analysis.github.io/categories/lazyfs-go/</loc>
+    <lastmod>2016-12-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -151,104 +275,6 @@
   
   <url>
     <loc>https://camhd-analysis.github.io/howto/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/</loc>
-    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/ci-lazycache/</loc>
-    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/escience/</loc>
-    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/escience-lazycache/</loc>
-    <lastmod>2017-01-24T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/escience-lazycache-gcp/</loc>
-    <lastmod>2017-02-13T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/lazycache/</loc>
-    <lastmod>2017-11-17T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/lazycache-gcp/</loc>
-    <lastmod>2017-06-16T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/lazycache-gcp-docker/</loc>
-    <lastmod>2017-07-05T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/lazycache-gcp-docker-swarm/</loc>
-    <lastmod>2017-07-07T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/lazyfs-go/</loc>
-    <lastmod>2016-12-26T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/page/</loc>
-    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/post/</loc>
-    <lastmod>2017-11-17T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://camhd-analysis.github.io/categories/pycamhd-lazycache/</loc>
-    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
@@ -266,7 +292,6 @@
   
   <url>
     <loc>https://camhd-analysis.github.io/tags/</loc>
-    <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   

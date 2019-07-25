@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.31.1" />
+    <meta name="generator" content="Hugo 0.56.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,23 +30,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://camhd-analysis.github.io/post/" />
 
-
-
-<meta property="og:updated_time" content="2017-05-01T00:00:00&#43;00:00"/>
-
-
-
-
-
-
-
-
-
-
+<meta property="og:updated_time" content="2017-11-17T00:00:00+00:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Posts"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
 
   </head>
@@ -69,20 +58,14 @@
         <ul class="pl0 mr3">
           
           <li class="list f5 f4-ns fw4 dib pr3">
-            <a class="hover-white no-underline white-90" href="/howto/" title=" page">
-              
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
             </a>
           </li>
           
           <li class="list f5 f4-ns fw4 dib pr3">
             <a class="hover-white no-underline white-90" href="/page/" title="Pages page">
               Pages
-            </a>
-          </li>
-          
-          <li class="list f5 f4-ns fw4 dib pr3">
-            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
-              Posts
             </a>
           </li>
           
@@ -119,6 +102,48 @@
   </main>
     
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+            <div class="mb3 pa4 mid-gray overflow-hidden">
+    
+      <div class="f6">
+        May 2, 2017
+      </div>
+    
+    <h1 class="f3 near-black">
+      <a href="/post/2017-05-02-benchmarking-on-google-compute-engine/" class="link black dim">
+        Benchmarking Frame Access Methods II, Google Compute Engine
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Following on the first round of benchmarking, I repeated the Lazycache-oriented portion of the benchmarks from a Google Compute Engine instance.
+To do this I started a GCE instance in the same zone (but in a different project) as my Google App Engine Lazycache instance. I used a n1-highcpu-4 (4 vCPUs, 3.6 GB memory) running Ubuntu 16.04LTS. Once the machine was provisioned I installed Miniconda manually, and then Jupyter notebook and all of the dependencies.
+    </div>
+  </div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+            <div class="mb3 pa4 mid-gray overflow-hidden">
+    
+      <div class="f6">
+        May 1, 2017
+      </div>
+    
+    <h1 class="f3 near-black">
+      <a href="/post/2017-05-01-benchmarking-pycamhd/" class="link black dim">
+        Benchmarking Frame Access Methods
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Tim and I (Aaron) have been exploring different strategies for making the CamHD video more accessible. Following our own paths, we&rsquo;ve come up with two closely related, yet subtly different tools for pulling individual frames from the HD Quicktime/ProRes files.
+There are two big families of tools:
+Tim has developed PyCamHD, a Python library which can efficiently extract single frames from a Quicktime file.
+My tools are &hellip; a little more complicated.
+    </div>
+  </div>
+
+        </div>
       
         <div class="relative w-100 w-30-l mb4 bg-white">
             <div class="mb3 pa4 mid-gray overflow-hidden">
@@ -281,57 +306,17 @@ They&rsquo;ve used those annotations to create a great set of time-lapse movies 
 
         </div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white">
-            <div class="mb3 pa4 mid-gray overflow-hidden">
-    
-      <div class="f6">
-        November 30, 2016
-      </div>
-    
-    <h1 class="f3 near-black">
-      <a href="/post/2016-11-30-thinking-aloud-about-specs/" class="link black dim">
-        Thinking out loud about accessing CamHD data
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A core driver for this project is the difficulty in performing analyses with the CamHD data as it sits on the CI at Rutgers. Each 14-ish minute video collection generates an 11TB Prores file. At eight files per day, that&rsquo;s about 616 GB/week, or 32TB / year.
-It seems like most analyses fall into two broad categories. Either you download a whole video, run it through some filter (make a time lapse, analyze the motion of the camera), or you want to download a small section of the video (perhaps even a few frames).
-    </div>
-  </div>
-
-        </div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white">
-            <div class="mb3 pa4 mid-gray overflow-hidden">
-    
-      <div class="f6">
-        November 1, 2016
-      </div>
-    
-    <h1 class="f3 near-black">
-      <a href="/post/2016-11-01-first-post/" class="link black dim">
-        Project kickoff!
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      First post!
-    </div>
-  </div>
-
-        </div>
-      
     </section>
     
 
 <ul class="pagination">
     
-    <li>
-        <a href="/post/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    <li class="page-item">
+        <a href="/post/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
     </li>
     
-    <li
-    >
-    <a href="/post/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    <li class="page-item">
+    <a href="/post/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
     </li>
     
     
@@ -339,33 +324,42 @@ It seems like most analyses fall into two broad categories. Either you download 
     
     
     
-        
-        
-    
-    
-    <li
-    ><a href="/post/">1</a></li>
-    
-    
-    
-    
-    
     
         
         
     
     
-    <li
-    class="active"><a href="/post/page/2/">2</a></li>
+    <li class="page-item"><a class="page-link" href="/post/">1</a></li>
     
     
-    <li
-    class="disabled">
-    <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item active"><a class="page-link" href="/post/page/2/">2</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/post/page/3/">3</a></li>
+    
+    
+    <li class="page-item">
+    <a href="/post/page/3/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
     </li>
     
-    <li>
-        <a href="/post/page/2/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    <li class="page-item">
+        <a href="/post/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
@@ -376,7 +370,7 @@ It seems like most analyses fall into two broad categories. Either you download 
     <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/" >
-    &copy; 2018 CamHD Video Analysis
+    &copy; 2019 CamHD Video Analysis
   </a>
   
 

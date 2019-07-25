@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.31.1" />
+    <meta name="generator" content="Hugo 0.56.0" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -30,23 +30,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://camhd-analysis.github.io/categories/" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<meta property="og:updated_time" content="2019-07-25T14:57:14-07:00" />
 <meta itemprop="name" content="Categories">
 <meta itemprop="description" content="">
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Categories"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Categories"/>
 <meta name="twitter:description" content=""/>
 
   </head>
@@ -69,20 +58,14 @@
         <ul class="pl0 mr3">
           
           <li class="list f5 f4-ns fw4 dib pr3">
-            <a class="hover-white no-underline white-90" href="/howto/" title=" page">
-              
+            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
+              Posts
             </a>
           </li>
           
           <li class="list f5 f4-ns fw4 dib pr3">
             <a class="hover-white no-underline white-90" href="/page/" title="Pages page">
               Pages
-            </a>
-          </li>
-          
-          <li class="list f5 f4-ns fw4 dib pr3">
-            <a class="hover-white no-underline white-90" href="/post/" title="Posts page">
-              Posts
             </a>
           </li>
           
@@ -241,6 +224,51 @@ It seems like a good time to step back, take stock and document. At this point I
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       UPDATE Feb 14 2017: For a bunch of reasons (mostly having to do with triggering CI builds), I decided lazycache-deploy didn&rsquo;t need to be its own repo. It&rsquo;s now a sub-directory of https://github.com/amarburg/go-lazycache-app. I&rsquo;ve done an imperfect modification of the text below&hellip;
 For totally arbitrary, er, I mean perfectly reasonable reasons, I&rsquo;ve decided to target Google Cloud Platform as my strawman &ldquo;commercial cloud&rdquo; provider. I still believe there&rsquo;s a use case for deploying the software &mdash; or some subset of it &mdash; on a local or lab machine, but it certainly makes a lot of sense to have the server capable of running in the cloud, whether it&rsquo;s public or strictly private to service a set of local compute instances, so this seemed like a good place to start.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
+          <a href="/categories/fauna_segmentation" class="link blue hover-black">
+            Category: fauna_segmentation
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Page</span>
+    <h1 class="f3 near-black">
+      <a href="/page/fauna_segmentation/training_data/" class="link black dim">
+        Segmentation training data
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
+          <a href="/categories/gce-lazycache" class="link blue hover-black">
+            Category: gce-lazycache
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Post</span>
+    <h1 class="f3 near-black">
+      <a href="/post/2017-05-02-benchmarking-on-google-compute-engine/" class="link black dim">
+        Benchmarking Frame Access Methods II, Google Compute Engine
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Following on the first round of benchmarking, I repeated the Lazycache-oriented portion of the benchmarks from a Google Compute Engine instance.
+To do this I started a GCE instance in the same zone (but in a different project) as my Google App Engine Lazycache instance. I used a n1-highcpu-4 (4 vCPUs, 3.6 GB memory) running Ubuntu 16.04LTS. Once the machine was provisioned I installed Miniconda manually, and then Jupyter notebook and all of the dependencies.
     </div>
   </div>
 </div>
@@ -450,6 +478,30 @@ Please see the landing page HERE.
 
         
       
+        <h2 class="f1">
+          <a href="/categories/regions" class="link blue hover-black">
+            Category: regions
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Post</span>
+    <h1 class="f3 near-black">
+      <a href="/post/2017-07-27-using-the-regions-data/" class="link black dim">
+        How to use the regions metadata
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This is a blog post I&rsquo;ve been looking forward to for a long time. We haven&rsquo;t processed and QC&rsquo;ed all of the data, but we are starting to make data products for public consumption.
+Along the way, I&rsquo;ve needed to grapple with some new questions:
+ Where do I store the public metadata so it will be persistently accessible? How to I publicize the data, make it trackable and citeable?
+    </div>
+  </div>
+</div>
+
+        
+      
     </section>
   </div>
 
@@ -457,7 +509,7 @@ Please see the landing page HERE.
     <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://camhd-analysis.github.io/" >
-    &copy; 2018 CamHD Video Analysis
+    &copy; 2019 CamHD Video Analysis
   </a>
   
 
