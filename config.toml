@@ -1,5 +1,5 @@
 baseURL = "https://camhd-analysis.github.io/"
-publishDir = "as_published_to_github/"
+publishDir = "_site_as_published/"
 languageCode = "en-us"
 title = "CamHD Video Analysis"
 theme = "ananke"
