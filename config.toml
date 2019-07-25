@@ -4,15 +4,25 @@ languageCode = "en-us"
 title = "CamHD Video Analysis"
 theme = "ananke"
 
-ignoreFiles = [ ".git*", ".htmltest.yml" ]
-
 MetaDataFormat = "yaml"
 DefaultContentLanguage = "en"
-SectionPagesMenu = "main"
 googleAnalytics = ""
 enableRobotsTXT = true
 
 pygmentsCodeFences = true
+
+#SectionPagesMenu = "main"
+[menu]
+
+  [[menu.main]]
+    name = "Posts"
+    url = "/post/"
+    weight = 10
+
+  [[menu.main]]
+    name = "Pages"
+    url = "/page/"
+    weight = 20
 
 [sitemap]
   changefreq = "monthly"
